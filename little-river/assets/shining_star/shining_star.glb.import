@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cs2g6tm0lsdxn"
-path="res://.godot/imported/sandwich.glb-0c0b4c44f9cdbf89cab7ba3141607279.scn"
+uid="uid://whe2t0upsu10"
+path="res://.godot/imported/shining_star.glb-3459c4b382005bf192419a66c7ae0710.scn"
 
 [deps]
 
-source_file="res://assets/sandwich.glb"
-dest_files=["res://.godot/imported/sandwich.glb-0c0b4c44f9cdbf89cab7ba3141607279.scn"]
+source_file="res://assets/shining_star/shining_star.glb"
+dest_files=["res://.godot/imported/shining_star.glb-3459c4b382005bf192419a66c7ae0710.scn"]
 
 [params]
 

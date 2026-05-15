@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bhc8jxk320ja0"]
+
+[ext_resource type="PackedScene" uid="uid://jvhlq6xist43" path="res://assets/shining_star/shining_star.blend" id="1_vdg21"]
+
+[node name="ShiningStar" type="Node3D" unique_id=1757721756]
+
+[node name="shining_star" parent="." unique_id=477071601 instance=ExtResource("1_vdg21")]
