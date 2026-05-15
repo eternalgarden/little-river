@@ -15,6 +15,10 @@ run/main_scene="uid://brddwt7pw6m2i"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="uid://dlidgycdnlch3"
 
+[autoload]
+
+Rzeka="*uid://d4bmxe3hvfppo"
+
 [dotnet]
 
 project/assembly_name="little-godot-river"
