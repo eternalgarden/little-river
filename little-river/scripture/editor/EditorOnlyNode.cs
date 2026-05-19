@@ -6,12 +6,10 @@ using Rzeka;
 namespace LittleRiver;
 // Just to be able to have a world environment while doing the level design
 // But ingame a central world environment is used
-public partial class EditorWorldEnvironment : Node
+public partial class EditorOnlyNode : Node
 {
-	[Export] WorldEnvironment _temporaryWorldEnvironment;
-
 	public override void _Ready()
 	{
-        _temporaryWorldEnvironment.QueueFree();
+		QueueFree();
 	}
 }

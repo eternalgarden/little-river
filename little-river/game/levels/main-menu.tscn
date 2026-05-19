@@ -1,35 +1,43 @@
 [gd_scene format=3 uid="uid://dn3ufm6l35byu"]
 
-[ext_resource type="Script" uid="uid://crsfav5gfxw5d" path="res://scripture/components/MainMenu.cs" id="1_ke2u0"]
-[ext_resource type="PackedScene" uid="uid://jvhlq6xist43" path="res://assets/shining_star/shining_star.blend" id="2_fwfvr"]
-[ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_y2f10"]
-[ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="4_4eff2"]
-[ext_resource type="Material" uid="uid://o0b4tbh6yup4" path="res://addons/character-controller/example/main/materials/rock.tres" id="5_3amyu"]
-[ext_resource type="PackedScene" uid="uid://dh7wg5y8ky5d8" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="6_n2j0h"]
-[ext_resource type="Script" uid="uid://csqhdj7qoxj8i" path="res://scripture/components/WelcomingScreen.cs" id="7_pcss2"]
-[ext_resource type="PackedScene" uid="uid://c2wcbu0vfyx1j" path="res://game/utility/EditorWorldEnv.tscn" id="8_1kf8i"]
-[ext_resource type="Environment" uid="uid://cfvb4wi0u4wap" path="res://game/world-envs/main-menu-env.tres" id="9_fwfvr"]
+[ext_resource type="Script" uid="uid://crsfav5gfxw5d" path="res://scripture/components/MainMenu.cs" id="1_07yhf"]
+[ext_resource type="PackedScene" uid="uid://jvhlq6xist43" path="res://assets/shining_star/shining_star.blend" id="2_etg3l"]
+[ext_resource type="Script" uid="uid://t0u2u4tl5wk5" path="res://scripture/effects/FloatEffect.cs" id="3_etg3l"]
+[ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_qolau"]
+[ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="4_7v0u2"]
+[ext_resource type="Material" uid="uid://o0b4tbh6yup4" path="res://addons/character-controller/example/main/materials/rock.tres" id="5_76elc"]
+[ext_resource type="PackedScene" uid="uid://dh7wg5y8ky5d8" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="6_x4gua"]
+[ext_resource type="Script" uid="uid://bqn58dshjb30f" path="res://scripture/effects/OrbitCamera.cs" id="7_3ug6f"]
+[ext_resource type="Environment" uid="uid://cfvb4wi0u4wap" path="res://game/world-envs/main-menu-env.tres" id="10_cu3cm"]
+[ext_resource type="FontFile" uid="uid://di1dqy4vmglt3" path="res://assets/fonts/Avara-Black.otf" id="10_qolau"]
+[ext_resource type="AudioStream" uid="uid://c37ejsq470ds5" path="res://assets/sounds/spaceship-ambience.wav" id="12_7v0u2"]
+[ext_resource type="Script" uid="uid://b4qeu5u6o8gaj" path="res://scripture/editor/EditorOnlyNode.cs" id="12_qolau"]
 
 [node name="scene_main_menu" type="Node3D" unique_id=1351229948 node_paths=PackedStringArray("_startGameButton", "_welcomingScreenControl")]
-script = ExtResource("1_ke2u0")
+script = ExtResource("1_07yhf")
 _startGameButton = NodePath("WelcomingScreen/Control/Button")
 _welcomingScreenControl = NodePath("WelcomingScreen/Control")
 
-[node name="shining_star" parent="." unique_id=1990171217 instance=ExtResource("2_fwfvr")]
-transform = Transform3D(0.7036676, 0, 0.7105293, 0, 1, 0, -0.7105293, 0, 0.7036676, 0.10201931, 0.9948418, 0.13055468)
+[node name="shining-star" type="Node3D" parent="." unique_id=95673557]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="shining_star" unique_id=195354422]
-light_energy = 14.317
+[node name="mesh" parent="shining-star" unique_id=1990171217 instance=ExtResource("2_etg3l")]
+transform = Transform3D(-0.90937847, 0, -0.41641364, 0, 1, 0, 0.41641364, 0, -0.90937847, 0.10201931, 1.057922, 0.13055468)
+script = ExtResource("3_etg3l")
+_maxHeightOffset = 0.25
+_rotationSpeed = -0.3
+
+[node name="OmniLight3D" type="OmniLight3D" parent="shining-star/mesh" unique_id=195354422]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5588323, 0)
+light_energy = 10.677
 light_indirect_energy = 2.341
 light_volumetric_fog_energy = 0.0
-omni_range = 5.527183
+omni_range = 6.019725
 
 [node name="Lighting" type="Node" parent="." unique_id=1644357250]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=1881551611]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866026, -0.5, 0.75, -0.433013, 0, 5, 0)
 visible = false
-light_energy = 0.05
 shadow_enabled = true
 directional_shadow_max_distance = 250.0
 
@@ -37,52 +45,57 @@ directional_shadow_max_distance = 250.0
 
 [node name="Floor" type="Node3D" parent="Level" unique_id=1819982278]
 
-[node name="Floor2" parent="Level/Floor" unique_id=2000170290 instance=ExtResource("3_y2f10")]
+[node name="Floor2" parent="Level/Floor" unique_id=2000170290 instance=ExtResource("3_qolau")]
 transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 40, 12, -0.5, 0)
-material_override = ExtResource("4_4eff2")
+material_override = ExtResource("4_7v0u2")
 
-[node name="Floor9" parent="Level/Floor" unique_id=237009380 instance=ExtResource("3_y2f10")]
+[node name="Floor9" parent="Level/Floor" unique_id=237009380 instance=ExtResource("3_qolau")]
 transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 40, -11.9786, -0.5, 0)
-material_override = ExtResource("4_4eff2")
+material_override = ExtResource("4_7v0u2")
 
-[node name="Floor7" parent="Level/Floor" unique_id=1058664956 instance=ExtResource("3_y2f10")]
+[node name="Floor7" parent="Level/Floor" unique_id=1058664956 instance=ExtResource("3_qolau")]
 transform = Transform3D(1.73205, -0.5, 0, 1, 0.866025, 0, 0, 0, 15, 3.88, -0.935, 12.5)
-material_override = ExtResource("4_4eff2")
+material_override = ExtResource("4_7v0u2")
 
-[node name="Floor8" parent="Level/Floor" unique_id=30725686 instance=ExtResource("3_y2f10")]
+[node name="Floor8" parent="Level/Floor" unique_id=30725686 instance=ExtResource("3_qolau")]
 transform = Transform3D(1.73205, 0.5, 0, -1, 0.866025, 0, 0, 0, 15, -3.86087, -0.931208, 12.4865)
-material_override = ExtResource("4_4eff2")
+material_override = ExtResource("4_7v0u2")
 
-[node name="Floor4" parent="Level/Floor" unique_id=1300107673 instance=ExtResource("3_y2f10")]
+[node name="Floor4" parent="Level/Floor" unique_id=1300107673 instance=ExtResource("3_qolau")]
 transform = Transform3D(-6.55671e-07, 0, -10, 0, 5, 0, 15, 0, -4.37114e-07, -0.00529146, -3.47481, 11.9858)
-material_override = ExtResource("5_3amyu")
+material_override = ExtResource("5_76elc")
 
-[node name="Floor10" parent="Level/Floor" unique_id=1674539968 instance=ExtResource("3_y2f10")]
+[node name="Floor12" parent="Level/Floor" unique_id=1001084405 instance=ExtResource("3_qolau")]
+transform = Transform3D(-6.55671e-07, 0, -10, 0, 5, 0, 15, 0, -4.37114e-07, -0.0052904487, -3.47481, -11.155806)
+material_override = ExtResource("5_76elc")
+
+[node name="Floor10" parent="Level/Floor" unique_id=1674539968 instance=ExtResource("3_qolau")]
 transform = Transform3D(-6.55671e-07, 0, -1, 0, 5, 0, 15, 0, -4.37114e-08, 5.00169, -3.47481, -1.26244)
-material_override = ExtResource("5_3amyu")
+material_override = ExtResource("5_76elc")
 
-[node name="Floor11" parent="Level/Floor" unique_id=255578014 instance=ExtResource("3_y2f10")]
+[node name="Floor11" parent="Level/Floor" unique_id=255578014 instance=ExtResource("3_qolau")]
 transform = Transform3D(-6.55671e-07, 0, -1, 0, 5, 0, 15, 0, -4.37114e-08, -4.979, -3.475, -1.262)
-material_override = ExtResource("5_3amyu")
+material_override = ExtResource("5_76elc")
 
-[node name="Floor5" parent="Level/Floor" unique_id=1890472190 instance=ExtResource("3_y2f10")]
+[node name="Floor5" parent="Level/Floor" unique_id=1890472190 instance=ExtResource("3_qolau")]
 transform = Transform3D(-4.37114e-07, 0, -10, 0, 1, 0, 10, 0, -4.37114e-07, 0, -5.5497, 0)
-material_override = ExtResource("5_3amyu")
+material_override = ExtResource("5_76elc")
 
-[node name="Floor6" parent="Level/Floor" unique_id=308450643 instance=ExtResource("3_y2f10")]
+[node name="Floor6" parent="Level/Floor" unique_id=308450643 instance=ExtResource("3_qolau")]
 transform = Transform3D(-2.98942e-07, 0, -10, 0, 1, 0, 6.839, 0, -4.37114e-07, 0, -0.5, -16.512)
-material_override = ExtResource("4_4eff2")
+material_override = ExtResource("4_7v0u2")
 
-[node name="Area3D" parent="Level" unique_id=1627461400 instance=ExtResource("6_n2j0h")]
+[node name="Area3D" parent="Level" unique_id=1627461400 instance=ExtResource("6_x4gua")]
 transform = Transform3D(0.491574, 0, 0, 0, 1, 0, 0, 0, 0.555284, 0, -3, 5.93584)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1910017535]
-transform = Transform3D(-0.5463468, 0.08802328, -0.8329209, -0.031021642, 0.99165314, 0.12514651, 0.8369844, 0.09421196, -0.53905576, -6.1444793, 2.0295143, -3.0301585)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1910017535 node_paths=PackedStringArray("_target")]
+transform = Transform3D(0.46067268, 0.3035668, -0.834043, 0, 0.9396926, 0.3420201, 0.8875701, -0.1575593, 0.4328907, -4.1702156, 2.2101007, 2.1644535)
+script = ExtResource("7_3ug6f")
+_target = NodePath("../shining-star")
+_yOffset = 0.5
+_orbitSpeed = 0.3
 
-[node name="WelcomingScreen" type="Node3D" parent="." unique_id=1703868511 node_paths=PackedStringArray("_startGameButton", "_welcomingScreenControl")]
-script = ExtResource("7_pcss2")
-_startGameButton = NodePath("Control/Button")
-_welcomingScreenControl = NodePath("Control")
+[node name="WelcomingScreen" type="Node3D" parent="." unique_id=1703868511]
 
 [node name="Control" type="Control" parent="WelcomingScreen" unique_id=1034127083]
 layout_mode = 3
@@ -99,12 +112,40 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -235.5
-offset_top = -74.0
-offset_right = 235.5
+offset_left = -234.0
+offset_top = -105.0
+offset_right = 237.0
+offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 0.6784314, 0.54901963, 1)
+theme_override_colors/font_pressed_color = Color(0.4509804, 0.9254902, 0.3019608, 1)
+theme_override_fonts/font = ExtResource("10_qolau")
 text = "Start Game"
 
-[node name="EditorWorldEnv" parent="." unique_id=259141403 instance=ExtResource("8_1kf8i")]
-environment = ExtResource("9_fwfvr")
+[node name="RichTextLabel" type="RichTextLabel" parent="WelcomingScreen/Control" unique_id=54264666]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 3.0
+offset_top = 426.0
+offset_right = 3.0
+offset_bottom = 526.0
+grow_horizontal = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("10_qolau")
+theme_override_font_sizes/normal_font_size = 72
+text = "Little River"
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EditorWorldEnvironment" type="WorldEnvironment" parent="." unique_id=1852901366]
+environment = ExtResource("10_cu3cm")
+script = ExtResource("12_qolau")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1444111558]
+stream = ExtResource("12_7v0u2")
+volume_db = -10.0
+autoplay = true

@@ -21,7 +21,8 @@ public partial class MainMenu : Node
     {
         Q = new();
 
-        _startGameButton.Disabled = true;
+        // _startGameButton.Disabled = true;
+        Input.MouseMode = Input.MouseModeEnum.Confined;
 
         RegisterSpells();
 
@@ -42,7 +43,10 @@ public partial class MainMenu : Node
     {
         Q += rzeka.Strand(
             this,
-            _startGameButton.OnPressed().Take(1).Select(_ => new StartGameRequested())
+            _startGameButton.OnPressed()
+                .Do(_ => GD.Print("meowl"))
+                .Take(1)
+                .Select(_ => new StartGameRequested())
         );
 
         Q += rzeka.Weave<StartGameRequested>(

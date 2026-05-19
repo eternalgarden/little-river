@@ -4,6 +4,7 @@
 background_energy_multiplier = 0.0
 ambient_light_energy = 0.0
 glow_enabled = true
+glow_intensity = 0.67
 fog_light_color = Color(0, 0, 0, 1)
 volumetric_fog_albedo = Color(0, 0, 0, 1)
 volumetric_fog_length = 73.59

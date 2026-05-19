@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://c2wcbu0vfyx1j"]
-
-[ext_resource type="Script" uid="uid://b4qeu5u6o8gaj" path="res://scripture/utility/EditorWorldEnvironment.cs" id="1_amkc0"]
-
-[node name="EditorWorldEnv" type="WorldEnvironment" unique_id=259141403 node_paths=PackedStringArray("_temporaryWorldEnvironment")]
-script = ExtResource("1_amkc0")
-_temporaryWorldEnvironment = NodePath(".")
