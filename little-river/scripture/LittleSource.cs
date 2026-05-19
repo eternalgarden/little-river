@@ -1,22 +1,35 @@
 using Godot;
 using Rzeka;
+using Rzeka.Dev;
 using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Threading;
 
-public partial class LittleRiver : Node
+namespace LittleRiver;
+public partial class LittleSource : Node
 {
 	public static IRzeka Rzeka { get; private set; }
 	public static IScheduler MainThread { get; private set; }
 
-	public override void _Ready()
+    CollectibleDisposable Q { get; set; } = new();
+
+	public override void _EnterTree()
 	{
 		SynchronizationContext.SetSynchronizationContext(new GodotMainThreadContext());
 		MainThread = new SynchronizationContextScheduler(SynchronizationContext.Current);
 
-		Rzeka = new Spring()
-			.Create("little-river");
+        Spring spring = new();
+        Q += spring.EnableDevServer();
+		Rzeka = spring
+            .Create("little-river");
 			
 		GD.Print("🌊 Rzeka is operational!");
+	}
+
+	public override void _ExitTree()
+	{
+		Q.Dispose();
+        Rzeka.Dispose();
 	}
 
 	// Posts callbacks to Godot's main thread via CallDeferred - backs the MainThread scheduler above.

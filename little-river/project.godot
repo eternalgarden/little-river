@@ -11,17 +11,21 @@ config_version=5
 [application]
 
 config/name="little-godot-river"
-run/main_scene="uid://brddwt7pw6m2i"
+run/main_scene="uid://ctwyin27c64xc"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="uid://dlidgycdnlch3"
 
 [autoload]
 
-Rzeka="*uid://d4bmxe3hvfppo"
+LittleSource="*uid://b2rhxyot4610r"
 
 [dotnet]
 
 project/assembly_name="little-godot-river"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/character-controller/plugin.cfg")
 
 [input]
 

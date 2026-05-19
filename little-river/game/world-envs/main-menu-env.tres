@@ -1,0 +1,9 @@
+[gd_resource type="Environment" format=3 uid="uid://cfvb4wi0u4wap"]
+
+[resource]
+background_energy_multiplier = 0.0
+ambient_light_energy = 0.0
+glow_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+volumetric_fog_albedo = Color(0, 0, 0, 1)
+volumetric_fog_length = 73.59

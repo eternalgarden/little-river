@@ -6,8 +6,14 @@
     <RootNamespace>littlegodotriver</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="EternalGarden.Rzeka" Version="1.0.1" />
-    <PackageReference Include="EternalGarden.Rzeka.Dev" Version="1.0.1" />
+    <ProjectReference Include="../../../../sanctuary/rzeka/core/Rzeka.Core.csproj"
+                      Condition="Exists('../../../../sanctuary/rzeka/core/Rzeka.Core.csproj')" />
+    <ProjectReference Include="../../../../sanctuary/rzeka/dev/Rzeka.Dev.csproj"
+                      Condition="Exists('../../../../sanctuary/rzeka/dev/Rzeka.Dev.csproj')" />
+    <PackageReference Include="EternalGarden.Rzeka" Version="1.0.1"
+                      Condition="!Exists('../../../../sanctuary/rzeka/core/Rzeka.Core.csproj')" />
+    <PackageReference Include="EternalGarden.Rzeka.Dev" Version="1.0.1"
+                      Condition="!Exists('../../../../sanctuary/rzeka/dev/Rzeka.Dev.csproj')" />
     <PackageReference Include="Fleck" Version="1.2.0" />
     <PackageReference Include="System.Reactive" Version="6.1.0" />
   </ItemGroup>

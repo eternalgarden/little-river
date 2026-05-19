@@ -1,7 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://2oxdgu03lnbk"]
+[gd_scene format=3 uid="uid://2oxdgu03lnbk"]
 
 [ext_resource type="PackedScene" uid="uid://8oy3xm2sff8" path="res://addons/character-controller/fps/fps_controller_3d.tscn" id="1_fbpun"]
-[ext_resource type="Script" path="res://addons/character-controller/example/main/Player.cs" id="2_8r0nc"]
+[ext_resource type="Script" uid="uid://bi8gk8c0hgllt" path="res://scripture/components/Player.cs" id="2_8r0nc"]
 [ext_resource type="Environment" uid="uid://b3cn01u84faiy" path="res://addons/character-controller/example/main/underwater.tres" id="3_rtvao"]
 [ext_resource type="PackedScene" path="res://addons/character-controller/example/main/audios/player_audios.tscn" id="4_ux8kv"]
 [ext_resource type="Curve" uid="uid://dhx3p5wsiw0bs" path="res://addons/character-controller/fps/bob/bob_curve.tres" id="4_waarh"]
