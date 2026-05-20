@@ -7,24 +7,19 @@ namespace LittleRiver;
 public partial class Main : Node
 {
 	[Export]
-	Node3D _activeSceneParent;
+	Node3D _mainMenuParent;
 
 	[Export]
 	PackedScene _mainMenuScene;
 
-	[Export]
-	PackedScene _levelOneScene;
-
-	CollectibleDisposable Q { get; set; }
 	IRzeka rzeka => LittleSource.Rzeka;
-
-	Node _activeScene;
+	CollectibleDisposable Q { get; set; }
 
 	public override void _EnterTree()
 	{
 		Q = new();
 
-		Initialise();
+		RegisterStartupSpells();
 	}
 
 	public override void _Ready()
@@ -48,7 +43,7 @@ public partial class Main : Node
 		}
 	}
 
-	void Initialise()
+	void RegisterStartupSpells()
 	{
 		Q += rzeka.Loom<GameOpened, MainMenuLoaded>(
 			this,
@@ -65,8 +60,8 @@ public partial class Main : Node
 						.Where(r => r.WasSuccessful)
 						.Reacting(r =>
 						{
-							_activeScene = r.PackedScene.Instantiate();
-							_activeSceneParent.CallDeferred(Node.MethodName.AddChild, _activeScene);
+							var activeScene = r.PackedScene.Instantiate();
+							_mainMenuParent.CallDeferred(Node.MethodName.AddChild, activeScene);
 						})
 						.Select(r => new MainMenuLoaded().WithCircumstances(gameStarted, r))
 				)

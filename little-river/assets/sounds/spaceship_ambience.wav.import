@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c37ejsq470ds5"
-path="res://.godot/imported/spaceship-ambience.wav-0d824c9ac1acfd3eb170cdeae348acc1.sample"
+path="res://.godot/imported/spaceship_ambience.wav-542f4b29179b0867a1916368e6163843.sample"
 
 [deps]
 
-source_file="res://assets/sounds/spaceship-ambience.wav"
-dest_files=["res://.godot/imported/spaceship-ambience.wav-0d824c9ac1acfd3eb170cdeae348acc1.sample"]
+source_file="res://assets/sounds/spaceship_ambience.wav"
+dest_files=["res://.godot/imported/spaceship_ambience.wav-542f4b29179b0867a1916368e6163843.sample"]
 
 [params]
 

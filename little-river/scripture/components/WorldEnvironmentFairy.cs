@@ -47,8 +47,8 @@ public partial class WorldEnvironmentFairy : Node
 		return env switch
 		{
 			EnvironmentEnum.Startup => StartupEnvironment,
-			EnvironmentEnum.MainMenu => StartupEnvironment,
-			EnvironmentEnum.Game => StartupEnvironment,
+			EnvironmentEnum.MainMenu => MainMenuEnvironment,
+			EnvironmentEnum.Game => GameEnvironment,
 			_ => StartupEnvironment
 		};
 	}

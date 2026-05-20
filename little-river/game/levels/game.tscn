@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bnrx4r24es1he" path="res://addons/character-controller/example/main/Level.cs" id="1_vsp63"]
 [ext_resource type="PackedScene" uid="uid://2oxdgu03lnbk" path="res://addons/character-controller/example/main/player.tscn" id="2_b686c"]
-[ext_resource type="Texture2D" uid="uid://svijnbaaeuol" path="res://addons/character-controller/example/main/textures/Free DEMO Pixel Skies Background pack by Digital Moons/demo01_PixelSky.png" id="3_hb504"]
 [ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="4_ee6o4"]
 [ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="5_4cobl"]
 [ext_resource type="Material" uid="uid://o0b4tbh6yup4" path="res://addons/character-controller/example/main/materials/rock.tres" id="6_ln7ps"]
@@ -12,23 +11,9 @@
 [ext_resource type="Material" uid="uid://ckvcdcn2iue87" path="res://addons/character-controller/example/main/materials/wood.tres" id="10_mhvfb"]
 [ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/wood.tres" id="11_5e03w"]
 [ext_resource type="PackedScene" uid="uid://dh7wg5y8ky5d8" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="12_leid8"]
-[ext_resource type="Script" uid="uid://bhn86r2rol5gy" path="res://scripture/point-collection/StarSpawner.cs" id="13_8bboj"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_l566q"]
-panorama = ExtResource("3_hb504")
-filter = false
-
-[sub_resource type="Sky" id="Sky_t5ash"]
-sky_material = SubResource("PanoramaSkyMaterial_l566q")
-radiance_size = 0
-
-[sub_resource type="Environment" id="Environment_7ofk6"]
-background_mode = 2
-background_energy_multiplier = 0.5
-sky = SubResource("Sky_t5ash")
-ambient_light_color = Color(1, 1, 1, 1)
-tonemap_mode = 2
-glow_enabled = true
+[ext_resource type="Script" uid="uid://bhn86r2rol5gy" path="res://scripture/point_collection/StarSpawner.cs" id="13_8bboj"]
+[ext_resource type="Environment" uid="uid://n1c4jv8jw1n2" path="res://game/world_envs/game_env.tres" id="13_x4w2k"]
+[ext_resource type="Script" uid="uid://b4qeu5u6o8gaj" path="res://scripture/editor/EditorOnlyNode.cs" id="14_cbern"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_egctf"]
 size = Vector3(8, 4, 4)
@@ -85,9 +70,6 @@ script = ExtResource("1_vsp63")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.180502, 5.584329, 6.259659)
 
 [node name="Lighting" type="Node" parent="." unique_id=1644357250]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting" unique_id=57127384]
-environment = SubResource("Environment_7ofk6")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=1881551611]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866026, -0.5, 0.75, -0.433013, 0, 5, 0)
@@ -474,3 +456,7 @@ transform = Transform3D(0.491574, 0, 0, 0, 1, 0, 0, 0, 0.555284, 0, -3, 5.93584)
 [node name="StarSpawner" type="Node3D" parent="." unique_id=135053120]
 transform = Transform3D(0.491574, 0, 0, 0, 1, 0, 0, 0, 0.555284, 0, -3, 5.93584)
 script = ExtResource("13_8bboj")
+
+[node name="EditorWorldEnvironment" type="WorldEnvironment" parent="." unique_id=1834686660]
+environment = ExtResource("13_x4w2k")
+script = ExtResource("14_cbern")

@@ -1,36 +1,40 @@
 [gd_scene format=3 uid="uid://ctwyin27c64xc"]
 
 [ext_resource type="Script" uid="uid://ddlb3nty5tscx" path="res://scripture/Main.cs" id="1_xtpaf"]
-[ext_resource type="PackedScene" uid="uid://dn3ufm6l35byu" path="res://game/levels/main-menu.tscn" id="2_xkbyp"]
+[ext_resource type="PackedScene" uid="uid://dn3ufm6l35byu" path="res://game/levels/main_menu.tscn" id="2_xkbyp"]
 [ext_resource type="Script" uid="uid://d0nhcwib8k0o5" path="res://scripture/components/WorldEnvironmentFairy.cs" id="3_5un7r"]
 [ext_resource type="Script" uid="uid://xi84lxahcnhf" path="res://scripture/components/SceneLoader.cs" id="3_emt18"]
-[ext_resource type="PackedScene" uid="uid://brddwt7pw6m2i" path="res://game/levels/level-one.tscn" id="3_lx3aj"]
-[ext_resource type="Environment" uid="uid://cc1epfyfro8og" path="res://game/world-envs/startup-env.tres" id="3_vop5m"]
-[ext_resource type="Environment" uid="uid://cfvb4wi0u4wap" path="res://game/world-envs/main-menu-env.tres" id="5_dgpao"]
-[ext_resource type="Environment" uid="uid://n1c4jv8jw1n2" path="res://game/world-envs/game-env.tres" id="6_wjctj"]
+[ext_resource type="Environment" uid="uid://cc1epfyfro8og" path="res://game/world_envs/startup_env.tres" id="3_vop5m"]
+[ext_resource type="Environment" uid="uid://cfvb4wi0u4wap" path="res://game/world_envs/main_menu_env.tres" id="5_dgpao"]
+[ext_resource type="Environment" uid="uid://n1c4jv8jw1n2" path="res://game/world_envs/game_env.tres" id="6_wjctj"]
+[ext_resource type="Script" uid="uid://dihaag17jakgi" path="res://scripture/components/GameLoop.cs" id="9_itumj"]
 [ext_resource type="Script" uid="uid://bdlmnlsuaplxn" path="res://scripture/effects/ScreenFader.cs" id="9_lx3aj"]
+[ext_resource type="PackedScene" uid="uid://brddwt7pw6m2i" path="res://game/levels/game.tscn" id="10_itumj"]
 
-[node name="main" type="Node3D" unique_id=352470164 node_paths=PackedStringArray("_activeSceneParent")]
+[node name="main" type="Node3D" unique_id=352470164 node_paths=PackedStringArray("_mainMenuParent")]
 script = ExtResource("1_xtpaf")
-_activeSceneParent = NodePath("active-scene-parent")
+_mainMenuParent = NodePath("main_menu")
 _mainMenuScene = ExtResource("2_xkbyp")
-_levelOneScene = ExtResource("3_lx3aj")
 
-[node name="scene-loader" type="Node3D" parent="." unique_id=1682464389]
+[node name="scene_loader" type="Node3D" parent="." unique_id=1682464389]
 script = ExtResource("3_emt18")
 
-[node name="world-env-fairy" type="Node3D" parent="." unique_id=1294092566 node_paths=PackedStringArray("WorldEnvironment")]
+[node name="world_env_fairy" type="Node3D" parent="." unique_id=1294092566 node_paths=PackedStringArray("WorldEnvironment")]
 script = ExtResource("3_5un7r")
 WorldEnvironment = NodePath("WorldEnvironment")
 StartupEnvironment = ExtResource("3_vop5m")
 MainMenuEnvironment = ExtResource("5_dgpao")
 GameEnvironment = ExtResource("6_wjctj")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="world-env-fairy" unique_id=18167779]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="world_env_fairy" unique_id=18167779]
 environment = ExtResource("3_vop5m")
 
-[node name="active-scene-parent" type="Node3D" parent="." unique_id=737234216]
+[node name="main_menu" type="Node3D" parent="." unique_id=737234216]
 
-[node name="screen-fader" type="Node3D" parent="." unique_id=259866688]
+[node name="screen_fader" type="Node3D" parent="." unique_id=259866688]
 script = ExtResource("9_lx3aj")
-_speed = 0.2
+
+[node name="game_loop" type="Node3D" parent="." unique_id=1754155116 node_paths=PackedStringArray("_gameSceneParent")]
+script = ExtResource("9_itumj")
+_gameScene = ExtResource("10_itumj")
+_gameSceneParent = NodePath(".")

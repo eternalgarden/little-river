@@ -31,7 +31,8 @@ public partial class ScreenFader : Node
 		_canvasLayer = new CanvasLayer { Layer = 100 };
 		AddChild(_canvasLayer);
 
-		_overlay = new ColorRect { Color = Colors.Black };
+		// Don't forget this mouse fileter setting, by default it will block all mouse input derp
+		_overlay = new ColorRect { Color = Colors.Black, MouseFilter = Control.MouseFilterEnum.Ignore };
 		_overlay.SetAnchorsPreset(Control.LayoutPreset.FullRect);
 		_canvasLayer.AddChild(_overlay);
 
@@ -58,7 +59,6 @@ public partial class ScreenFader : Node
 		{
 			var tween = CreateTween();
 			tween.TweenProperty(_overlay, "modulate:a", targetAlpha, duration);
-			GD.Print("tweening");
 			tween.TweenCallback(
 				Callable.From(() =>
 				{

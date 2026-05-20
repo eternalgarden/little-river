@@ -8,9 +8,9 @@
 [ext_resource type="Material" uid="uid://o0b4tbh6yup4" path="res://addons/character-controller/example/main/materials/rock.tres" id="5_76elc"]
 [ext_resource type="PackedScene" uid="uid://dh7wg5y8ky5d8" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="6_x4gua"]
 [ext_resource type="Script" uid="uid://bqn58dshjb30f" path="res://scripture/effects/OrbitCamera.cs" id="7_3ug6f"]
-[ext_resource type="Environment" uid="uid://cfvb4wi0u4wap" path="res://game/world-envs/main-menu-env.tres" id="10_cu3cm"]
+[ext_resource type="Environment" uid="uid://cfvb4wi0u4wap" path="res://game/world_envs/main_menu_env.tres" id="10_cu3cm"]
 [ext_resource type="FontFile" uid="uid://di1dqy4vmglt3" path="res://assets/fonts/Avara-Black.otf" id="10_qolau"]
-[ext_resource type="AudioStream" uid="uid://c37ejsq470ds5" path="res://assets/sounds/spaceship-ambience.wav" id="12_7v0u2"]
+[ext_resource type="AudioStream" uid="uid://c37ejsq470ds5" path="res://assets/sounds/spaceship_ambience.wav" id="12_7v0u2"]
 [ext_resource type="Script" uid="uid://b4qeu5u6o8gaj" path="res://scripture/editor/EditorOnlyNode.cs" id="12_qolau"]
 
 [node name="scene_main_menu" type="Node3D" unique_id=1351229948 node_paths=PackedStringArray("_startGameButton", "_welcomingScreenControl")]
@@ -18,15 +18,15 @@ script = ExtResource("1_07yhf")
 _startGameButton = NodePath("WelcomingScreen/Control/Button")
 _welcomingScreenControl = NodePath("WelcomingScreen/Control")
 
-[node name="shining-star" type="Node3D" parent="." unique_id=95673557]
+[node name="shining_star" type="Node3D" parent="." unique_id=95673557]
 
-[node name="mesh" parent="shining-star" unique_id=1990171217 instance=ExtResource("2_etg3l")]
-transform = Transform3D(-0.90937847, 0, -0.41641364, 0, 1, 0, 0.41641364, 0, -0.90937847, 0.10201931, 1.057922, 0.13055468)
+[node name="mesh" parent="shining_star" unique_id=1990171217 instance=ExtResource("2_etg3l")]
+transform = Transform3D(0.9515229, 0, -0.3065312, 0, 1, 0, 0.3065312, 0, 0.9515229, 0.10201931, 0.6656634, 0.13055468)
 script = ExtResource("3_etg3l")
 _maxHeightOffset = 0.25
 _rotationSpeed = -0.3
 
-[node name="OmniLight3D" type="OmniLight3D" parent="shining-star/mesh" unique_id=195354422]
+[node name="OmniLight3D" type="OmniLight3D" parent="shining_star/mesh" unique_id=195354422]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5588323, 0)
 light_energy = 10.677
 light_indirect_energy = 2.341
@@ -89,9 +89,9 @@ material_override = ExtResource("4_7v0u2")
 transform = Transform3D(0.491574, 0, 0, 0, 1, 0, 0, 0, 0.555284, 0, -3, 5.93584)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1910017535 node_paths=PackedStringArray("_target")]
-transform = Transform3D(0.46067268, 0.3035668, -0.834043, 0, 0.9396926, 0.3420201, 0.8875701, -0.1575593, 0.4328907, -4.1702156, 2.2101007, 2.1644535)
+transform = Transform3D(-0.1568662, 0.33778587, -0.9280591, 0, 0.9396926, 0.34202012, 0.9876199, 0.053651396, -0.147406, -4.6402955, 2.2101007, -0.73703045)
 script = ExtResource("7_3ug6f")
-_target = NodePath("../shining-star")
+_target = NodePath("../shining_star")
 _yOffset = 0.5
 _orbitSpeed = 0.3
 
