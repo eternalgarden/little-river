@@ -26,12 +26,15 @@ public partial class GameLoop : Node3D
         RegisterGameLoopSpells();
     }
 
-    public override void _Ready() { }
+    public override void _Ready()
+    {
+        rzeka.Pluck(this, new GameTimerState(_gameTimer));
+    }
 
     public override void _Process(double delta)
     {
         if (_isGameOn)
-            _gameTimer.Advance(delta);
+            _gameTimer.Tick(delta);
     }
 
     public override void _ExitTree()
@@ -60,15 +63,10 @@ public partial class GameLoop : Node3D
                 )
         );
 
-        Q += rzeka.Loom<GameReadyToLoad, WorldEnvironmentRequested>(
-            this,
-            spell =>
-                spell
-                    .Take(1)
-                    .Select(_ => new WorldEnvironmentRequested(
-                        WorldEnvironmentFairy.EnvironmentEnum.Game
-                    ))
-        );
+        // Q += rzeka.Loom<GameReadyToLoad, GameTimerState>(
+        //     this,
+        //     spell => spell.Take(1).Select(_ => new GameTimerState(_gameTimer))
+        // );
 
         Q += rzeka.Loom<GameReadyToLoad, GameLoaded>(
             this,
@@ -118,8 +116,6 @@ public partial class GameLoop : Node3D
 
     void RegisterGameLoopSpells()
     {
-        rzeka.Pluck(this, new GameTimerState(_gameTimer));
-
         Q += rzeka.Weave<GameStarted>(
             this,
             spell =>
@@ -146,8 +142,14 @@ public partial class GameLoop : Node3D
                 )
         );
 
-        // Q += rzeka.Loom<GameStarted, fin()
+        Q += rzeka.Weave<GameWon>(this, spell => spell.Subscribe(_ => _isGameOn = false));
 
-        // Q += rzeka.
+        Q += rzeka.Loom<PlayerScoreState, GameWon>(
+            this,
+            spell =>
+                spell
+                    .Where(scoreState => scoreState.Score == 1)
+                    .Select(_ => new GameWon(_gameTimer.Elapsed))
+        );
     }
 }

@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://brddwt7pw6m2i"]
 
+[ext_resource type="Script" uid="uid://b24be8fmvhaus" path="res://scripture/components/GameLevel.cs" id="1_sulf3"]
 [ext_resource type="PackedScene" uid="uid://2oxdgu03lnbk" path="res://addons/character-controller/example/main/player.tscn" id="2_b686c"]
 [ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="4_ee6o4"]
 [ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="5_4cobl"]
@@ -14,6 +15,7 @@
 [ext_resource type="Script" uid="uid://b4qeu5u6o8gaj" path="res://scripture/editor/EditorOnlyNode.cs" id="14_cbern"]
 [ext_resource type="FontFile" uid="uid://di1dqy4vmglt3" path="res://assets/fonts/Avara-Black.otf" id="15_cbern"]
 [ext_resource type="Script" uid="uid://dwdmo6rakhojg" path="res://scripture/components/ScoreCounter.cs" id="15_h5pk6"]
+[ext_resource type="Script" uid="uid://j57olx8xwvkb" path="res://scripture/components/GameWonDisplay.cs" id="16_h5pk6"]
 [ext_resource type="PackedScene" uid="uid://fdu2gaq1h2ai" path="res://assets/shining_star/shining_star.tscn" id="17_sulf3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_egctf"]
@@ -65,6 +67,7 @@ size = Vector3(14, 0.5, 4)
 data = PackedVector3Array(-7, 0.25, 2, 7, 0.25, 2, -7, -0.25, 2, 7, 0.25, 2, 7, -0.25, 2, -7, -0.25, 2, 7, 0.25, -2, -7, 0.25, -2, 7, -0.25, -2, -7, 0.25, -2, -7, -0.25, -2, 7, -0.25, -2, 7, 0.25, 2, 7, 0.25, -2, 7, -0.25, 2, 7, 0.25, -2, 7, -0.25, -2, 7, -0.25, 2, -7, 0.25, -2, -7, 0.25, 2, -7, -0.25, -2, -7, 0.25, 2, -7, -0.25, 2, -7, -0.25, -2, 7, 0.25, 2, -7, 0.25, 2, 7, 0.25, -2, -7, 0.25, 2, -7, 0.25, -2, 7, 0.25, -2, -7, -0.25, 2, 7, -0.25, 2, -7, -0.25, -2, 7, -0.25, 2, 7, -0.25, -2, -7, -0.25, -2)
 
 [node name="scene_game_level_one" type="Node3D" unique_id=1351229948]
+script = ExtResource("1_sulf3")
 
 [node name="Player" parent="." unique_id=1029575084 instance=ExtResource("2_b686c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.180502, 5.584329, 6.259659)
@@ -532,3 +535,48 @@ theme_override_constants/outline_size = 7
 theme_override_fonts/normal_font = ExtResource("15_cbern")
 theme_override_font_sizes/normal_font_size = 21
 text = "17.34s"
+
+[node name="control_game_won" type="Control" parent="." unique_id=1145675669 node_paths=PackedStringArray("_timeLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("16_h5pk6")
+_timeLabel = NodePath("label_time")
+
+[node name="label_score" type="RichTextLabel" parent="control_game_won" unique_id=1248595214]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -794.0
+offset_top = 199.0
+offset_right = -283.0
+offset_bottom = 386.0
+grow_horizontal = 0
+theme_override_colors/default_color = Color(1, 0.48575765, 0.65046626, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/normal_font = ExtResource("15_cbern")
+theme_override_font_sizes/normal_font_size = 72
+text = "You won!"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="label_time" type="RichTextLabel" parent="control_game_won" unique_id=686417077]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -755.0
+offset_top = 387.0
+offset_right = -321.0
+offset_bottom = 473.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 7
+theme_override_fonts/normal_font = ExtResource("15_cbern")
+theme_override_font_sizes/normal_font_size = 21
+text = "It took you: 17.34s"
+horizontal_alignment = 1

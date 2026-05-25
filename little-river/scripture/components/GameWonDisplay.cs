@@ -1,15 +1,36 @@
-using Godot;
 using System;
+using System.Reactive.Linq;
+using Godot;
+using Rzeka;
 
-public partial class GameWonDisplay : Node
+namespace LittleRiver;
+
+public partial class GameWonDisplay : Control
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	CollectibleDisposable Q { get; set; }
+	static IRzeka rzeka => LittleSource.Rzeka;
+
+	[Export]
+	RichTextLabel _timeLabel;
+
+	public override void _EnterTree()
 	{
+		Q = new();
+		Visible = false;
+
+		Q += rzeka.Weave<GameWon>(
+			this,
+			spell =>
+				spell.Subscribe(won =>
+				{
+					_timeLabel.Text = $"It took you: {won.ElapsedTime:F2}s! ✨";
+					Visible = true;
+				})
+		);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _ExitTree()
 	{
+		Q.Dispose();
 	}
 }

@@ -7,57 +7,61 @@ namespace LittleRiver;
 
 public partial class ScoreCounter : Control
 {
-    CollectibleDisposable Q { get; set; }
-    static IRzeka rzeka => LittleSource.Rzeka;
+	CollectibleDisposable Q { get; set; }
+	static IRzeka rzeka => LittleSource.Rzeka;
 
-    [Export]
-    RichTextLabel _scoreLabel;
+	[Export]
+	RichTextLabel _scoreLabel;
 
-    [Export]
-    RichTextLabel _timeLabel;
+	[Export]
+	RichTextLabel _timeLabel;
 
-    double _elapsed;
-    bool _isRunning;
+	GameTimer _gameTimer;
+	IDisposable _timerSubscription;
 
-    public override void _EnterTree()
-    {
-        Q = new();
+	public override void _EnterTree()
+	{
+		Q = new();
+		Visible = false;
 
-        Q += rzeka.Weave<PlayerScoreState>(
-            this,
-            state => state.Subscribe(s => _scoreLabel.Text = $"Stars: {s.Score}/10")
-        );
+		Q += rzeka.Weave<PlayerScoreState>(
+			this,
+			state => state.Subscribe(s => _scoreLabel.Text = $"Stars: {s.Score}/10")
+		);
 
-        Q += rzeka.Weave<GameStarted>(
-            this,
-            spell =>
-                spell.Subscribe(_ =>
-                {
-                    _elapsed = 0;
-                    _isRunning = true;
-                })
-        );
+		Q += rzeka.Weave<GameTimerState>(
+			this,
+			spell => spell.Subscribe(state => _gameTimer = state.GameTimer)
+		);
 
-        Q += rzeka.Loom<GameWon, FinalGameTimeCaptured>(
-            this,
-            spell =>
-                spell
-                    .Take(1)
-                    .Reacting(_ => _isRunning = false)
-                    .Select(_ => new FinalGameTimeCaptured(_elapsed))
-        );
-    }
+		Q += rzeka.Weave<GameStarted>(
+			this,
+			spell =>
+				spell.Subscribe(_ =>
+				{
+					Visible = true;
+					_timerSubscription?.Dispose();
+					_timerSubscription = _gameTimer.Time.Subscribe(t =>
+						_timeLabel.Text = $"{t:F2}s"
+					);
+				})
+		);
 
-    public override void _Process(double delta)
-    {
-        if (!_isRunning)
-            return;
-        _elapsed += delta;
-        _timeLabel.Text = $"{_elapsed:F2}s";
-    }
+		Q += rzeka.Weave<GameWon>(
+			this,
+			spell =>
+				spell.Subscribe(_ =>
+				{
+					_timerSubscription?.Dispose();
+					_timerSubscription = null;
+					Visible = false;
+				})
+		);
+	}
 
-    public override void _ExitTree()
-    {
-        Q.Dispose();
-    }
+	public override void _ExitTree()
+	{
+		_timerSubscription?.Dispose();
+		Q.Dispose();
+	}
 }

@@ -13,7 +13,7 @@ public partial class MainMenu : Node3D
     [Export]
     Control _welcomingScreenControl;
 
-    IRzeka rzeka => LittleSource.Rzeka;
+    static IRzeka rzeka => LittleSource.Rzeka;
     CollectibleDisposable Q { get; set; }
 
     public override void _EnterTree()
@@ -41,7 +41,6 @@ public partial class MainMenu : Node3D
             spell =>
                 spell
                     .Where(e => e.Scene == SceneEnteredTree.SceneEnum.MainMenu)
-                    .Take(1)
                     .Select(_ => new WorldEnvironmentRequested(
                         WorldEnvironmentFairy.EnvironmentEnum.MainMenu
                     ))
@@ -49,12 +48,12 @@ public partial class MainMenu : Node3D
 
         Q += rzeka.Strand(
             this,
-            _startGameButton.OnPressed().Take(1).Select(_ => new StartGameButtonPressed())
+            _startGameButton.OnPressed().Select(_ => new StartGameButtonPressed())
         );
 
         Q += rzeka.Loom<StartGameButtonPressed, StartGameRequested>(
             this,
-            presses => presses.Select(_ => new StartGameRequested())
+            presses => presses.Take(1).Select(_ => new StartGameRequested())
         );
 
         Q += rzeka.Loom<StartGameButtonPressed, UIButtonPressed>(

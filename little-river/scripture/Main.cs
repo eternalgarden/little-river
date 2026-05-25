@@ -24,7 +24,6 @@ public partial class Main : Node
 
     public override void _Ready()
     {
-        GD.Print("HMMM");
         rzeka.Pluck(this, new GameOpened());
     }
 
@@ -46,7 +45,12 @@ public partial class Main : Node
 
     void RegisterStartupSpells()
     {
-        Q += rzeka.Loom<GameOpened, MainMenuLoaded>(
+        Q += rzeka.Loom<GameOpened, MainMenuRequested>(
+            this,
+            spell => spell.Take(1).Select(_ => new MainMenuRequested())
+        );
+
+        Q += rzeka.Loom<MainMenuRequested, MainMenuLoaded>(
             this,
             spell =>
                 spell.SelectMany(gameStarted =>

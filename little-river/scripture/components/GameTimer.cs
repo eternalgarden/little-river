@@ -5,14 +5,14 @@ namespace LittleRiver;
 
 public class GameTimer
 {
-    readonly Subject<double> _tick = new();
-    public IObservable<double> Tick => _tick;
+    readonly Subject<double> _time = new();
+    public IObservable<double> Time => _time;
     public double Elapsed { get; private set; }
 
-    public void Advance(double delta)
+    public void Tick(double delta)
     {
         Elapsed += delta;
-        _tick.OnNext(Elapsed);
+        _time.OnNext(Elapsed);
     }
 
     public void Reset()
