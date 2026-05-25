@@ -110,7 +110,7 @@ public partial class SwimAbility3D : MovementAbility3D
         if (depth < 0.1f)
         {
             // Prevent free sea movement from exceeding the water surface
-            tempVel.Y = Math.Min(velocity.Y, 0);
+            tempVel.Y = Math.Min(tempVel.Y, 0);
         }
 
         return new Vector3(tempVel.X, tempVel.Y, tempVel.Z);

@@ -14,88 +14,140 @@ public partial class GameLoop : Node3D
     Node3D _gameSceneParent;
 
     CollectibleDisposable Q { get; set; }
-    IRzeka rzeka => LittleSource.Rzeka;
+    static IRzeka rzeka => LittleSource.Rzeka;
+
+    bool _isGameOn = false;
+    readonly GameTimer _gameTimer = new();
 
     public override void _EnterTree()
     {
         Q = new();
+        RegisterGameStartSpells();
         RegisterGameLoopSpells();
     }
 
     public override void _Ready() { }
 
-    public override void _Process(double delta) { }
+    public override void _Process(double delta)
+    {
+        if (_isGameOn)
+            _gameTimer.Advance(delta);
+    }
 
     public override void _ExitTree()
     {
         Q.Dispose();
     }
 
-    void RegisterGameLoopSpells()
+    void RegisterGameStartSpells()
     {
         Q += rzeka.Loom<StartGameRequested, GameReadyToLoad>(
             this,
             spell =>
-                spell.SelectMany(req =>
+                spell.SelectMany(startGame =>
                     rzeka
                         .Ask<ScreenFadeRequest, ScreenFadeResponse>(
                             this,
                             new ScreenFadeRequest(
                                 ScreenFadeRequest.ScreenFadeEnum.FadeOut,
                                 0.5f
-                            ).WithCircumstances(req)
+                            ).WithCircumstances(startGame)
                         )
-                        .Where(res => res.WasSuccessful)
-                        .Select(_ => new GameReadyToLoad())
+                        .Where(fadeRes => fadeRes.WasSuccessful)
+                        .Select(fadeRes =>
+                            new GameReadyToLoad().WithCircumstances(startGame, fadeRes)
+                        )
                 )
         );
 
-        Q += rzeka.Loom<GameReadyToLoad, GameStarted>(
+        Q += rzeka.Loom<GameReadyToLoad, WorldEnvironmentRequested>(
             this,
             spell =>
-                spell.SelectMany(req =>
+                spell
+                    .Take(1)
+                    .Select(_ => new WorldEnvironmentRequested(
+                        WorldEnvironmentFairy.EnvironmentEnum.Game
+                    ))
+        );
+
+        Q += rzeka.Loom<GameReadyToLoad, GameLoaded>(
+            this,
+            spell =>
+                spell.SelectMany(gameReady =>
                     rzeka
                         .Ask<LoadSceneRequest, LoadSceneResponse>(
                             this,
-                            new LoadSceneRequest(_gameScene.ResourcePath).WithCircumstances(req)
+                            new LoadSceneRequest(_gameScene.ResourcePath).WithCircumstances(
+                                gameReady
+                            )
                         )
                         .Where(res => res.WasSuccessful)
-                        .Reacting(r =>
+                        .SelectMany(async r =>
                         {
-                            var scene = r.PackedScene.Instantiate();
-                            if (_gameSceneParent is null)
-                            {
-                                rzeka.Whisper("_gameSceneParent is null", RzekaMessageType.Horror);
-                                return;
-                            }
-                            if (scene is null)
-                            {
-                                rzeka.Whisper("scene is null", RzekaMessageType.Horror);
-                                return;
-                            }
+                            var scene =
+                                r.PackedScene.Instantiate()
+                                ?? throw new InvalidOperationException(
+                                    $"Instantiate returned null for {_gameScene.ResourcePath}"
+                                );
+
                             _gameSceneParent.CallDeferred(Node.MethodName.AddChild, scene);
+                            await scene.ToSignal(scene, Node.SignalName.Ready);
+                            return new GameLoaded().WithCircumstances(gameReady, r);
                         })
-                        .Select(res => new GameStarted().WithCircumstances(req, res))
+                        .ObserveOn(rzeka.MainThread)
                 )
         );
 
-		Q += rzeka.Loom<GameReadyToLoad, WorldEnvironmentRequested>(
-			this,
-			spell =>
-				spell
-					.Take(1)
-					.Select(_ => new WorldEnvironmentRequested(
-						WorldEnvironmentFairy.EnvironmentEnum.Game
-					))
-		);
-
-        Q += rzeka.Loom<GameStarted, ScreenFadeRequest>(
+        Q += rzeka.Loom<GameLoaded, GameStarted>(
             this,
             spell =>
-                spell.Select(_ => new ScreenFadeRequest(
-                    ScreenFadeRequest.ScreenFadeEnum.FadeIn,
-                    0.5f
-                ))
+                spell.SelectMany(e =>
+                    rzeka
+                        .Ask<ScreenFadeRequest, ScreenFadeResponse>(
+                            this,
+                            new ScreenFadeRequest(
+                                ScreenFadeRequest.ScreenFadeEnum.FadeIn,
+                                0.5f
+                            ).WithCircumstances(e)
+                        )
+                        .Where(r => r.WasSuccessful)
+                        .Select(_ => new GameStarted())
+                )
         );
+    }
+
+    void RegisterGameLoopSpells()
+    {
+        rzeka.Pluck(this, new GameTimerState(_gameTimer));
+
+        Q += rzeka.Weave<GameStarted>(
+            this,
+            spell =>
+                spell.Subscribe(_ =>
+                {
+                    _gameTimer.Reset();
+                    _isGameOn = true;
+                })
+        );
+
+        Q += rzeka.Loom<PlayerScoreState, PlayerScoreState>(
+            this,
+            state =>
+                Observable.Merge(
+                    rzeka
+                        .Scry<StarCollected>()
+                        .WithLatestFrom(
+                            state,
+                            (col, s) => new PlayerScoreState(s.Score + 1).WithCircumstances(col)
+                        ),
+                    rzeka
+                        .Scry<GameReadyToLoad>()
+                        .Select(e => new PlayerScoreState(0).WithCircumstances(e))
+                )
+        );
+
+        // Q += rzeka.Loom<GameStarted, fin()
+
+        // Q += rzeka.
     }
 }

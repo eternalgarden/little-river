@@ -17,4 +17,20 @@
 - **File**: spaceship_ambience.wav
 - **Author:** nick121087
 - **Source:** https://freesound.org/s/234316/
-- **License:** License: Creative Commons 0
+- **License:** Creative Commons 0
+
+#### Clicking for Multiple Purposes
+- **File**: click.wav
+- **Author:** BiORNADE
+- **Source:** https://freesound.org/people/BiORNADE/sounds/735804/
+- **License:** Creative Commons 0
+
+#### Boom_C_06
+- **File**: boom.wav
+- **Author:** cabled_mess
+- **Source:** https://freesound.org/people/cabled_mess/sounds/350977/
+- **License:** Creative Commons 0
+
+#### 'Ambience' and 'March and Toccata'
+- **File**: ambience.ogg & march_and_toccata.ogg
+- **License:** CC BY-NC

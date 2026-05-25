@@ -6,10 +6,14 @@
 [ext_resource type="Script" uid="uid://xi84lxahcnhf" path="res://scripture/components/SceneLoader.cs" id="3_emt18"]
 [ext_resource type="Environment" uid="uid://cc1epfyfro8og" path="res://game/world_envs/startup_env.tres" id="3_vop5m"]
 [ext_resource type="Environment" uid="uid://cfvb4wi0u4wap" path="res://game/world_envs/main_menu_env.tres" id="5_dgpao"]
-[ext_resource type="Environment" uid="uid://n1c4jv8jw1n2" path="res://game/world_envs/game_env.tres" id="6_wjctj"]
+[ext_resource type="Environment" uid="uid://dg1bl5lkt8wtl" path="res://game/world_envs/2.tres" id="7_g6fv7"]
 [ext_resource type="Script" uid="uid://dihaag17jakgi" path="res://scripture/components/GameLoop.cs" id="9_itumj"]
 [ext_resource type="Script" uid="uid://bdlmnlsuaplxn" path="res://scripture/effects/ScreenFader.cs" id="9_lx3aj"]
 [ext_resource type="PackedScene" uid="uid://brddwt7pw6m2i" path="res://game/levels/game.tscn" id="10_itumj"]
+[ext_resource type="Script" uid="uid://b4f0t2qucop6j" path="res://scripture/components/AudioPlayer.cs" id="11_dp3pf"]
+[ext_resource type="AudioStream" uid="uid://pwh6tkry0xpl" path="res://assets/sounds/click.wav" id="12_g6fv7"]
+[ext_resource type="AudioStream" uid="uid://c37ejsq470ds5" path="res://assets/sounds/spaceship_ambience.wav" id="13_frwyw"]
+[ext_resource type="AudioStream" uid="uid://bn11mxqv0tgtk" path="res://assets/sounds/ambience.ogg" id="14_yyxey"]
 
 [node name="main" type="Node3D" unique_id=352470164 node_paths=PackedStringArray("_mainMenuParent")]
 script = ExtResource("1_xtpaf")
@@ -24,7 +28,7 @@ script = ExtResource("3_5un7r")
 WorldEnvironment = NodePath("WorldEnvironment")
 StartupEnvironment = ExtResource("3_vop5m")
 MainMenuEnvironment = ExtResource("5_dgpao")
-GameEnvironment = ExtResource("6_wjctj")
+GameEnvironment = ExtResource("7_g6fv7")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="world_env_fairy" unique_id=18167779]
 environment = ExtResource("3_vop5m")
@@ -38,3 +42,17 @@ script = ExtResource("9_lx3aj")
 script = ExtResource("9_itumj")
 _gameScene = ExtResource("10_itumj")
 _gameSceneParent = NodePath(".")
+
+[node name="audio_player" type="Node3D" parent="." unique_id=809006747 node_paths=PackedStringArray("_ambienceSoundPlayer", "_effectSoundPlayer")]
+script = ExtResource("11_dp3pf")
+_ambienceSoundPlayer = NodePath("ambience_audio_player")
+_effectSoundPlayer = NodePath("effect_audio_player")
+_buttonSound = ExtResource("12_g6fv7")
+_mainMenuAmbience = ExtResource("13_frwyw")
+_gameAmbience = ExtResource("14_yyxey")
+
+[node name="ambience_audio_player" type="AudioStreamPlayer" parent="audio_player" unique_id=1558856354]
+volume_db = -15.0
+
+[node name="effect_audio_player" type="AudioStreamPlayer" parent="audio_player" unique_id=75247220]
+volume_db = -15.0

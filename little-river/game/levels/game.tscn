@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://brddwt7pw6m2i"]
 
-[ext_resource type="Script" uid="uid://bnrx4r24es1he" path="res://addons/character-controller/example/main/Level.cs" id="1_vsp63"]
 [ext_resource type="PackedScene" uid="uid://2oxdgu03lnbk" path="res://addons/character-controller/example/main/player.tscn" id="2_b686c"]
 [ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="4_ee6o4"]
 [ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="5_4cobl"]
@@ -11,9 +10,11 @@
 [ext_resource type="Material" uid="uid://ckvcdcn2iue87" path="res://addons/character-controller/example/main/materials/wood.tres" id="10_mhvfb"]
 [ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/wood.tres" id="11_5e03w"]
 [ext_resource type="PackedScene" uid="uid://dh7wg5y8ky5d8" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="12_leid8"]
-[ext_resource type="Script" uid="uid://bhn86r2rol5gy" path="res://scripture/point_collection/StarSpawner.cs" id="13_8bboj"]
-[ext_resource type="Environment" uid="uid://n1c4jv8jw1n2" path="res://game/world_envs/game_env.tres" id="13_x4w2k"]
+[ext_resource type="Environment" uid="uid://dg1bl5lkt8wtl" path="res://game/world_envs/2.tres" id="12_x4w2k"]
 [ext_resource type="Script" uid="uid://b4qeu5u6o8gaj" path="res://scripture/editor/EditorOnlyNode.cs" id="14_cbern"]
+[ext_resource type="FontFile" uid="uid://di1dqy4vmglt3" path="res://assets/fonts/Avara-Black.otf" id="15_cbern"]
+[ext_resource type="Script" uid="uid://dwdmo6rakhojg" path="res://scripture/components/ScoreCounter.cs" id="15_h5pk6"]
+[ext_resource type="PackedScene" uid="uid://fdu2gaq1h2ai" path="res://assets/shining_star/shining_star.tscn" id="17_sulf3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_egctf"]
 size = Vector3(8, 4, 4)
@@ -64,17 +65,9 @@ size = Vector3(14, 0.5, 4)
 data = PackedVector3Array(-7, 0.25, 2, 7, 0.25, 2, -7, -0.25, 2, 7, 0.25, 2, 7, -0.25, 2, -7, -0.25, 2, 7, 0.25, -2, -7, 0.25, -2, 7, -0.25, -2, -7, 0.25, -2, -7, -0.25, -2, 7, -0.25, -2, 7, 0.25, 2, 7, 0.25, -2, 7, -0.25, 2, 7, 0.25, -2, 7, -0.25, -2, 7, -0.25, 2, -7, 0.25, -2, -7, 0.25, 2, -7, -0.25, -2, -7, 0.25, 2, -7, -0.25, 2, -7, -0.25, -2, 7, 0.25, 2, -7, 0.25, 2, 7, 0.25, -2, -7, 0.25, 2, -7, 0.25, -2, 7, 0.25, -2, -7, -0.25, 2, 7, -0.25, 2, -7, -0.25, -2, 7, -0.25, 2, 7, -0.25, -2, -7, -0.25, -2)
 
 [node name="scene_game_level_one" type="Node3D" unique_id=1351229948]
-script = ExtResource("1_vsp63")
 
 [node name="Player" parent="." unique_id=1029575084 instance=ExtResource("2_b686c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.180502, 5.584329, 6.259659)
-
-[node name="Lighting" type="Node" parent="." unique_id=1644357250]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=1881551611]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866026, -0.5, 0.75, -0.433013, 0, 5, 0)
-shadow_enabled = true
-directional_shadow_max_distance = 250.0
 
 [node name="Level" type="Node3D" parent="." unique_id=71595760]
 
@@ -251,7 +244,7 @@ physics_material_override = ExtResource("11_5e03w")
 shape = SubResource("ConcavePolygonShape3D_makhu")
 
 [node name="Platform3" type="MeshInstance3D" parent="Level/ArenaGeometry" unique_id=1037013481]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -17.5, 5.75, -1.75)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -17.5, 5.75, -4.523387)
 material_override = ExtResource("10_mhvfb")
 mesh = SubResource("BoxMesh_ook3l")
 
@@ -262,7 +255,7 @@ physics_material_override = ExtResource("11_5e03w")
 shape = SubResource("ConcavePolygonShape3D_gl53m")
 
 [node name="Platform4" type="MeshInstance3D" parent="Level/ArenaGeometry" unique_id=763934251]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 17.5, 5.75, -1.75)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 17.5, 5.75, -5.7214823)
 material_override = ExtResource("10_mhvfb")
 mesh = SubResource("BoxMesh_ook3l")
 
@@ -453,10 +446,89 @@ transform = Transform3D(0.491574, 0, 0, 0, 1, 0, 0, 0, 0.555284, 0, -3, 5.93584)
 
 [node name="Node3D" type="Node3D" parent="Level" unique_id=2054258245]
 
-[node name="StarSpawner" type="Node3D" parent="." unique_id=135053120]
-transform = Transform3D(0.491574, 0, 0, 0, 1, 0, 0, 0, 0.555284, 0, -3, 5.93584)
-script = ExtResource("13_8bboj")
-
 [node name="EditorWorldEnvironment" type="WorldEnvironment" parent="." unique_id=1834686660]
-environment = ExtResource("13_x4w2k")
+environment = ExtResource("12_x4w2k")
 script = ExtResource("14_cbern")
+
+[node name="stars" type="Node3D" parent="." unique_id=1267990414]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.4665444, 1.2187428)
+
+[node name="shining_star2" parent="stars" unique_id=1917366608 instance=ExtResource("17_sulf3")]
+transform = Transform3D(0.5790962, 0, 0.8152592, 0, 1, 0, -0.8152592, 0, 0.5790962, 12.538182, 0.5285785, -2.6692953)
+
+[node name="shining_star3" parent="stars" unique_id=1930137224 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.096385, 2.0628119, 3.104559)
+
+[node name="shining_star4" parent="stars" unique_id=1313904716 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.792928, 7.1226907, -6.5583844)
+
+[node name="shining_star5" parent="stars" unique_id=685777352 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.779417, 10.446694, -18.568144)
+
+[node name="shining_star10" parent="stars" unique_id=1471125701 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.360826, 10.276497, -7.781693)
+
+[node name="shining_star6" parent="stars" unique_id=1822711515 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.669121, 10.354855, -18.311613)
+
+[node name="shining_star8" parent="stars" unique_id=684322727 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2515459, 8.681601, -16.848679)
+
+[node name="shining_star11" parent="stars" unique_id=1771924231 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11190057, 1.1684899, -0.011825442)
+
+[node name="shining_star9" parent="stars" unique_id=104150014 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2515459, 8.3480835, 12.093222)
+
+[node name="shining_star13" parent="stars" unique_id=527776810 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2515459, 3.5930698, 7.3010025)
+
+[node name="shining_star12" parent="stars" unique_id=579948981 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.16556, 9.509928, 6.8725863)
+
+[node name="shining_star7" parent="stars" unique_id=1843327833 instance=ExtResource("17_sulf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.452408, 10.230839, -5.7381516)
+
+[node name="control_score" type="Control" parent="." unique_id=1474367322 node_paths=PackedStringArray("_scoreLabel", "_timeLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_h5pk6")
+_scoreLabel = NodePath("label_score")
+_timeLabel = NodePath("label_time")
+
+[node name="label_score" type="RichTextLabel" parent="control_score" unique_id=13833561]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -287.0
+offset_top = 22.0
+offset_right = -19.0
+offset_bottom = 64.0
+grow_horizontal = 0
+theme_override_colors/default_color = Color(0.5254902, 0.4509804, 1, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/normal_font = ExtResource("15_cbern")
+theme_override_font_sizes/normal_font_size = 32
+text = "Score: 12"
+horizontal_alignment = 2
+
+[node name="label_time" type="RichTextLabel" parent="control_score" unique_id=530756380]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -91.0
+offset_top = 61.0
+offset_right = -8.0
+offset_bottom = 103.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 7
+theme_override_fonts/normal_font = ExtResource("15_cbern")
+theme_override_font_sizes/normal_font_size = 21
+text = "17.34s"

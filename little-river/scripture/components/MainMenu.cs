@@ -7,62 +7,72 @@ namespace LittleRiver;
 
 public partial class MainMenu : Node3D
 {
-	[Export]
-	Button _startGameButton;
+    [Export]
+    Button _startGameButton;
 
-	[Export]
-	Control _welcomingScreenControl;
+    [Export]
+    Control _welcomingScreenControl;
 
-	IRzeka rzeka => LittleSource.Rzeka;
-	CollectibleDisposable Q { get; set; }
+    IRzeka rzeka => LittleSource.Rzeka;
+    CollectibleDisposable Q { get; set; }
 
-	public override void _EnterTree()
-	{
-		Q = new();
+    public override void _EnterTree()
+    {
+        Q = new();
 
-		Input.MouseMode = Input.MouseModeEnum.Confined;
+        Input.MouseMode = Input.MouseModeEnum.Confined;
 
-		RegisterSpells();
+        RegisterSpells();
 
-		rzeka.Pluck(this, new SceneEnteredTree("main_menu"));
-	}
+        rzeka.Pluck(this, new SceneEnteredTree(SceneEnteredTree.SceneEnum.MainMenu));
+    }
 
-	public override void _Ready() { }
+    public override void _Ready() { }
 
-	public override void _ExitTree()
-	{
-		Q.Dispose();
-	}
+    public override void _ExitTree()
+    {
+        Q.Dispose();
+    }
 
-	void RegisterSpells()
-	{
-		Q += rzeka.Loom<SceneEnteredTree, WorldEnvironmentRequested>(
-			this,
-			spell =>
-				spell
-					.Where(e => e.SceneName == "main_menu")
-					.Take(1)
-					.Select(_ => new WorldEnvironmentRequested(
-						WorldEnvironmentFairy.EnvironmentEnum.MainMenu
-					))
-		);
+    void RegisterSpells()
+    {
+        Q += rzeka.Loom<SceneEnteredTree, WorldEnvironmentRequested>(
+            this,
+            spell =>
+                spell
+                    .Where(e => e.Scene == SceneEnteredTree.SceneEnum.MainMenu)
+                    .Take(1)
+                    .Select(_ => new WorldEnvironmentRequested(
+                        WorldEnvironmentFairy.EnvironmentEnum.MainMenu
+                    ))
+        );
 
-		Q += rzeka.Strand(
-			this,
-			_startGameButton.OnPressed().Take(1).Select(_ => new StartGameRequested())
-		);
+        Q += rzeka.Strand(
+            this,
+            _startGameButton.OnPressed().Take(1).Select(_ => new StartGameButtonPressed())
+        );
 
-		Q += rzeka.Weave<GameReadyToLoad>(
-			this,
-			spell =>
-				spell
-					.Take(1)
-					.Subscribe(_ =>
-					{
-						_welcomingScreenControl.Visible = false;
-						Visible = false;
-						QueueFree();
-					})
-		);
-	}
+        Q += rzeka.Loom<StartGameButtonPressed, StartGameRequested>(
+            this,
+            presses => presses.Select(_ => new StartGameRequested())
+        );
+
+        Q += rzeka.Loom<StartGameButtonPressed, UIButtonPressed>(
+            this,
+            presses => presses.Select(_ => new UIButtonPressed())
+        );
+
+        Q += rzeka.Weave<GameReadyToLoad>(
+            this,
+            spell =>
+                spell
+                    .Take(1)
+                    .Subscribe(_ =>
+                    {
+                        _welcomingScreenControl.Visible = false;
+                        Visible = false;
+                        QueueFree();
+                    })
+        );
+    }
 }

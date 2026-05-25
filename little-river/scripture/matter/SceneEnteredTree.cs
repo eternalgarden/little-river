@@ -1,12 +1,19 @@
 using Rzeka;
 
 namespace LittleRiver;
-public class SceneEnteredTree : Matter 
+
+public class SceneEnteredTree : Matter
 {
-	public string SceneName { get; }
-	
-	public SceneEnteredTree(string sceneName)
-	{
-		SceneName = sceneName;
-	}
+    public enum SceneEnum
+    {
+        MainMenu,
+        Game,
+    }
+
+    public SceneEnum Scene { get; }
+
+    public SceneEnteredTree(SceneEnum scene)
+    {
+        Scene = scene;
+    }
 }
