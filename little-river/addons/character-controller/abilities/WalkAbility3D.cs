@@ -6,16 +6,25 @@ using Godot;
 public partial class WalkAbility3D : MovementAbility3D
 {
     // Time for the character to reach full speed
-    [Export] public float Acceleration = 8f;
+    [Export]
+    public float Acceleration = 8f;
 
     // Time for the character to stop walking
-    [Export] public float Deceleration = 10f;
+    [Export]
+    public float Deceleration = 10f;
 
     // Sets control in the air
-    [Export(PropertyHint.Range, "0.0, 1.0, 0.05")] public float AirControl = 0.3f;
+    [Export(PropertyHint.Range, "0.0, 1.0, 0.05")]
+    public float AirControl = 0.3f;
 
     // Takes direction of movement from input and turns it into horizontal velocity.
-    public override Vector3 Apply(Vector3 velocity, float speed, bool isOnFloor, Vector3 direction, float delta)
+    public override Vector3 Apply(
+        Vector3 velocity,
+        float speed,
+        bool isOnFloor,
+        Vector3 direction,
+        float delta
+    )
     {
         if (!IsActived())
             return velocity;

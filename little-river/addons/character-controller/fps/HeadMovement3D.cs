@@ -7,10 +7,12 @@ using Godot;
 public partial class HeadMovement3D : Marker3D
 {
     // Mouse sensitivity of rotation move
-    [Export] public float MouseSensitivity = 2.0f;
+    [Export]
+    public float MouseSensitivity = 2.0f;
 
     // Vertical angle limit of rotation move
-    [Export] public float VerticalAngleLimit = 90.0f;
+    [Export]
+    public float VerticalAngleLimit = 90.0f;
 
     // Actual rotation of movement
     private Vector3 _actualRotation = new Vector3(0, 0, 0);
@@ -40,9 +42,17 @@ public partial class HeadMovement3D : Marker3D
         // Horizontal mouse look.
         _actualRotation.Y -= mouseAxis.X * (MouseSensitivity / 1000);
         // Vertical mouse look.
-        _actualRotation.X = Mathf.Clamp(_actualRotation.X - mouseAxis.Y * (MouseSensitivity / 1000), -VerticalAngleLimit, VerticalAngleLimit);
+        _actualRotation.X = Mathf.Clamp(
+            _actualRotation.X - mouseAxis.Y * (MouseSensitivity / 1000),
+            -VerticalAngleLimit,
+            VerticalAngleLimit
+        );
 
-        GetOwner<Node3D>().Rotation = new Vector3(GetOwner<Node3D>().Rotation.X, _actualRotation.Y, GetOwner<Node3D>().Rotation.Z);
+        GetOwner<Node3D>().Rotation = new Vector3(
+            GetOwner<Node3D>().Rotation.X,
+            _actualRotation.Y,
+            GetOwner<Node3D>().Rotation.Z
+        );
         Rotation = new Vector3(_actualRotation.X, Rotation.Y, Rotation.Z);
     }
 }

@@ -1,7 +1,8 @@
 using Rzeka;
 
 namespace LittleRiver;
-public class WorldEnvironmentRequested : Matter 
+
+public class WorldEnvironmentRequested : Matter
 {
     public WorldEnvironmentFairy.EnvironmentEnum Environment { get; }
 

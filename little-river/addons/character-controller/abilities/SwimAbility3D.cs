@@ -3,7 +3,7 @@ using Godot;
 
 // Swim ability of CharacterController3D.
 //
-// There are three possible states: 
+// There are three possible states:
 // - Touching water
 // - Floating in water
 // - Submerged
@@ -14,28 +14,36 @@ using Godot;
 public partial class SwimAbility3D : MovementAbility3D
 {
     // Emitted when character controller touched water
-    [Signal] public delegate void EnteredTheWaterEventHandler();
+    [Signal]
+    public delegate void EnteredTheWaterEventHandler();
 
     // Emitted when character controller stopped touching water
-    [Signal] public delegate void ExitTheWaterEventHandler();
+    [Signal]
+    public delegate void ExitTheWaterEventHandler();
 
     // Emitted when we start to float in water
-    [Signal] public delegate void StartedFloatingEventHandler();
+    [Signal]
+    public delegate void StartedFloatingEventHandler();
 
     // Emitted when we stop to float in water
-    [Signal] public delegate void StoppedFloatingEventHandler();
+    [Signal]
+    public delegate void StoppedFloatingEventHandler();
 
     // Minimum height for CharacterController3D to be completely submerged in water
-    [Export] public float SubmergedHeight = 0.36f;
+    [Export]
+    public float SubmergedHeight = 0.36f;
 
     // Minimum height for CharacterController3D to be float in water
-    [Export] public float FloatingHeight = 0.55f;
+    [Export]
+    public float FloatingHeight = 0.55f;
 
     // Speed multiplier when floating in water
-    [Export] public float OnWaterSpeedMultiplier = 0.75f;
+    [Export]
+    public float OnWaterSpeedMultiplier = 0.75f;
 
     // Speed multiplier when submerged in water
-    [Export] public float SubmergedSpeedMultiplier = 0.5f;
+    [Export]
+    public float SubmergedSpeedMultiplier = 0.5f;
 
     private RayCast3D _raycast;
     private bool _isOnWater;
@@ -76,18 +84,15 @@ public partial class SwimAbility3D : MovementAbility3D
         {
             EmitSignal(SignalName.EnteredTheWater);
         }
-
         else if (!IsOnWater() && _wasIsOnWater)
         {
             EmitSignal(SignalName.ExitTheWater);
         }
 
-
         if (IsFloating() && !_wasIsFloating)
         {
             EmitSignal(SignalName.StartedFloating);
         }
-
         else if (!IsFloating() && _wasIsFloating)
         {
             EmitSignal(SignalName.StoppedFloating);
@@ -97,7 +102,13 @@ public partial class SwimAbility3D : MovementAbility3D
         _wasIsFloating = _isFloating;
     }
 
-    public override Vector3 Apply(Vector3 velocity, float speed, bool isOnFloor, Vector3 direction, float delta)
+    public override Vector3 Apply(
+        Vector3 velocity,
+        float speed,
+        bool isOnFloor,
+        Vector3 direction,
+        float delta
+    )
     {
         if (!IsFloating())
             return velocity;

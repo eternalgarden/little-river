@@ -6,47 +6,70 @@ using Godot;
 public partial class HeadBob : Node
 {
     // Node that will receive the headbob effect
-    [Export] public NodePath HeadPath;
+    [Export]
+    public NodePath HeadPath;
 
     [ExportGroup("Step Bob")]
     // Enables the headbob effect for the steps taken
-    [Export] public bool StepBobEnabled = true;
+    [Export]
+    public bool StepBobEnabled = true;
+
     // Maximum range value of headbob
-    [Export] public Vector2 BobRange = new Vector2(0.07f, 0.07f);
+    [Export]
+    public Vector2 BobRange = new Vector2(0.07f, 0.07f);
+
     // Curve where bob happens
-    [Export] public Curve BobCurve;
+    [Export]
+    public Curve BobCurve;
+
     // Curve Multiplier
-    [Export] public Vector2 CurveMultiplier = new Vector2(2f, 2f);
+    [Export]
+    public Vector2 CurveMultiplier = new Vector2(2f, 2f);
+
     // Difference of step headbob movement between vertical and horizontal angle
-    [Export] public float VerticalHorizontalRatio = 2f;
+    [Export]
+    public float VerticalHorizontalRatio = 2f;
 
     [ExportGroup("Jump Bob")]
     // Enables bob for made jumps
-    [Export] public bool JumpBobEnabled = true;
+    [Export]
+    public bool JumpBobEnabled = true;
+
     // Resource that stores information from bob lerp jump
-    [Export] public TimedBobCurve TimedBobCurve;
+    [Export]
+    public TimedBobCurve TimedBobCurve;
 
     [ExportGroup("Rotation To Move (Quake Like)")]
     // Enables camera angle for the direction the character controller moves
-    [Export] public bool RotationToMove = true;
+    [Export]
+    public bool RotationToMove = true;
+
     // Speed at which the camera angle moves
-    [Export] public float SpeedRotation = 4.0f;
+    [Export]
+    public float SpeedRotation = 4.0f;
+
     // Rotation angle limit per move
-    [Export] public float AngleLimitForRotation = 0.1f;
+    [Export]
+    public float AngleLimitForRotation = 0.1f;
 
     // Node that will receive the headbob effect
     private Node3D _head;
+
     // Actual speed of headbob
     private float _speed = 0f;
+
     // Actual speed of headbob
     private Vector3 _originalPosition = new Vector3(0, 0, 0);
+
     // Store original rotation of head for headbob reference
     private Vector3 _originalRotation = new Vector3(0, 0, 0);
 
     // Actual cycle x of step headbob
     private float _cyclePositionX = 0f;
+
     // Actual cycle y of step headbob
     private float _cyclePositionY = 0f;
+
     // Actual interval of step headbob
     private float _stepInterval = 0f;
 
@@ -65,7 +88,13 @@ public partial class HeadBob : Node
     }
 
     // Applies step headbob and rotation headbob (quake style).
-    public void HeadBobProcess(Vector3 horizontalVelocity, Vector2 inputAxis, bool isSprint, bool isOnFloor, float delta)
+    public void HeadBobProcess(
+        Vector3 horizontalVelocity,
+        Vector2 inputAxis,
+        bool isSprint,
+        bool isOnFloor,
+        float delta
+    )
     {
         if (TimedBobCurve != null)
         {
@@ -120,8 +149,13 @@ public partial class HeadBob : Node
 
     private Vector3 HeadBobRotation(float x, float z, float delta)
     {
-        Vector3 targetRotation = new Vector3(x * AngleLimitForRotation, 0f, -z * AngleLimitForRotation);
-        return _head.Rotation.Lerp(targetRotation, SpeedRotation * delta); ;
+        Vector3 targetRotation = new Vector3(
+            x * AngleLimitForRotation,
+            0f,
+            -z * AngleLimitForRotation
+        );
+        return _head.Rotation.Lerp(targetRotation, SpeedRotation * delta);
+        ;
     }
 
     private Vector3 DoHeadBob(float speed, float delta)

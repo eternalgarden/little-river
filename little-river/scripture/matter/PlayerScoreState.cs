@@ -5,10 +5,10 @@ namespace LittleRiver;
 [HasState]
 public class PlayerScoreState : Matter
 {
-	public int Score { get; }
+    public int Score { get; }
 
-	public PlayerScoreState(int score)
-	{
-		Score = score;
-	}
+    public PlayerScoreState(int score)
+    {
+        Score = score;
+    }
 }

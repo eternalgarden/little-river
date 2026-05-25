@@ -5,9 +5,14 @@ namespace LittleRiver;
 [Tool]
 public partial class FloatEffect : Node3D
 {
-    [Export] float _floatSpeed = 1f;
-    [Export] float _maxHeightOffset = 0.5f;
-    [Export] float _rotationSpeed = 1f;
+    [Export]
+    float _floatSpeed = 1f;
+
+    [Export]
+    float _maxHeightOffset = 0.5f;
+
+    [Export]
+    float _rotationSpeed = 1f;
 
     Vector3 _initialPosition;
     float _time = 0f;
@@ -24,7 +29,8 @@ public partial class FloatEffect : Node3D
         Position = new Vector3(
             _initialPosition.X,
             _initialPosition.Y + Mathf.Sin(_time) * _maxHeightOffset,
-            _initialPosition.Z);
+            _initialPosition.Z
+        );
         RotateY(_rotationSpeed * (float)delta);
     }
 }

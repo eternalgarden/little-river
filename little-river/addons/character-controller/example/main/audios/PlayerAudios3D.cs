@@ -3,19 +3,26 @@ using Godot;
 using Godot.Collections;
 
 // Script that plays sounds based on player actions.
-// Using an [AudioInteract] array synchronized with physic_materials array to 
+// Using an [AudioInteract] array synchronized with physic_materials array to
 // identify different sound structures for each type of physical material.
 
 public partial class PlayerAudios3D : Node3D
 {
     // Default audio interact used
-    [Export] public AudioInteract AudioInteract;
-    // List of [PhysicsMaterial] synchronized with the [AudioInteract] list 
-    [Export] public Array<PhysicsMaterial> PhysicMaterials = new Array<PhysicsMaterial>();
+    [Export]
+    public AudioInteract AudioInteract;
+
+    // List of [PhysicsMaterial] synchronized with the [AudioInteract] list
+    [Export]
+    public Array<PhysicsMaterial> PhysicMaterials = new Array<PhysicsMaterial>();
+
     // List of [AudioInteract] synchronized with the [PhysicsMaterial] list
-    [Export] public Array<AudioInteract> AudioInteracts = new Array<AudioInteract>();
+    [Export]
+    public Array<AudioInteract> AudioInteracts = new Array<AudioInteract>();
+
     // Specific case of audio interact that occurs when we are in the water
-    [Export] public AudioInteract WaterAudioInteract;
+    [Export]
+    public AudioInteract WaterAudioInteract;
 
     private AudioStreamPlayer3D _stepStream;
     private AudioStreamPlayer3D _landStream;

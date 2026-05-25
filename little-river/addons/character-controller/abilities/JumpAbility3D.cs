@@ -6,10 +6,17 @@ using Godot;
 public partial class JumpAbility3D : MovementAbility3D
 {
     // Jump/Impulse height
-    [Export] public float Height = 10.0f;
+    [Export]
+    public float Height = 10.0f;
 
     // Change vertical velocity of CharacterController3D
-    public override Vector3 Apply(Vector3 velocity, float speed, bool isOnFloor, Vector3 direction, float delta)
+    public override Vector3 Apply(
+        Vector3 velocity,
+        float speed,
+        bool isOnFloor,
+        Vector3 direction,
+        float delta
+    )
     {
         if (!IsActived())
             return velocity;

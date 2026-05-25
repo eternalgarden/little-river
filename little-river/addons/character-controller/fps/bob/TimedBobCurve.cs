@@ -7,16 +7,21 @@ using Godot;
 public partial class TimedBobCurve : Resource
 {
     // Duration of the entire bob process
-    [Export] public float Duration { get; set; } = 0.2f;
+    [Export]
+    public float Duration { get; set; } = 0.2f;
+
     // Max amount in bob offset
-    [Export] public float Amount { get; set; } = 0.1f;
+    [Export]
+    public float Amount { get; set; } = 0.1f;
 
     // Actual offset of bob
     private float _offset = 0.0f;
+
     // Actual direction flag of bob
     // true if initial state
     // false for final state
     private bool _direction = true;
+
     // Current time for current direction flag
     private float _time;
 

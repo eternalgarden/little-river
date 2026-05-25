@@ -1,55 +1,67 @@
-using Godot;
 using System;
 using System.Reactive.Linq;
+using Godot;
 using Rzeka;
 
 namespace LittleRiver;
+
 public partial class WorldEnvironmentFairy : Node
 {
-	public enum EnvironmentEnum { Startup, MainMenu, Game }
-	
-	[Export] WorldEnvironment WorldEnvironment { get; set; }
-	[Export] Godot.Environment StartupEnvironment { get; set; }
-	[Export] Godot.Environment MainMenuEnvironment { get; set; }
-	[Export] Godot.Environment GameEnvironment { get; set; }
-	
-	CollectibleDisposable Q { get; set; }
-	IRzeka rzeka => LittleSource.Rzeka;
+    public enum EnvironmentEnum
+    {
+        Startup,
+        MainMenu,
+        Game,
+    }
 
-	public override void _EnterTree()
-	{
-		Q = new();
+    [Export]
+    WorldEnvironment WorldEnvironment { get; set; }
 
-		WorldEnvironment.Environment = StartupEnvironment;
+    [Export]
+    Godot.Environment StartupEnvironment { get; set; }
 
-		RegisterSpells();
-	}
+    [Export]
+    Godot.Environment MainMenuEnvironment { get; set; }
 
-	public override void _Ready()
-	{
-	}
+    [Export]
+    Godot.Environment GameEnvironment { get; set; }
 
-	public override void _ExitTree()
-	{
-		Q.Dispose();
-	}
+    CollectibleDisposable Q { get; set; }
+    IRzeka rzeka => LittleSource.Rzeka;
 
-	void RegisterSpells()
-	{
-		Q += rzeka.Weave<WorldEnvironmentRequested>(
-			this,
-			spell => spell
-				.Subscribe(e => WorldEnvironment.Environment = GetEnvironment(e.Environment)));
-	}
+    public override void _EnterTree()
+    {
+        Q = new();
 
-	Godot.Environment GetEnvironment(EnvironmentEnum env)
-	{
-		return env switch
-		{
-			EnvironmentEnum.Startup => StartupEnvironment,
-			EnvironmentEnum.MainMenu => MainMenuEnvironment,
-			EnvironmentEnum.Game => GameEnvironment,
-			_ => StartupEnvironment
-		};
-	}
+        WorldEnvironment.Environment = StartupEnvironment;
+
+        RegisterSpells();
+    }
+
+    public override void _Ready() { }
+
+    public override void _ExitTree()
+    {
+        Q.Dispose();
+    }
+
+    void RegisterSpells()
+    {
+        Q += rzeka.Weave<WorldEnvironmentRequested>(
+            this,
+            spell =>
+                spell.Subscribe(e => WorldEnvironment.Environment = GetEnvironment(e.Environment))
+        );
+    }
+
+    Godot.Environment GetEnvironment(EnvironmentEnum env)
+    {
+        return env switch
+        {
+            EnvironmentEnum.Startup => StartupEnvironment,
+            EnvironmentEnum.MainMenu => MainMenuEnvironment,
+            EnvironmentEnum.Game => GameEnvironment,
+            _ => StartupEnvironment,
+        };
+    }
 }
