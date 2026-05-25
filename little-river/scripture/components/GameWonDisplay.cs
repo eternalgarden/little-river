@@ -7,11 +7,11 @@ namespace LittleRiver;
 
 public partial class GameWonDisplay : Control
 {
-	CollectibleDisposable Q { get; set; }
-	static IRzeka rzeka => LittleSource.Rzeka;
-
 	[Export]
 	RichTextLabel _timeLabel;
+
+	static IRzeka rzeka => LittleSource.Rzeka;
+	CollectibleDisposable Q { get; set; }
 
 	public override void _EnterTree()
 	{
@@ -23,7 +23,7 @@ public partial class GameWonDisplay : Control
 			spell =>
 				spell.Subscribe(won =>
 				{
-					_timeLabel.Text = $"It took you: {won.ElapsedTime:F2}s! ✨";
+					_timeLabel.Text = $"It took you: {won.ElapsedTime:F2}s!";
 					Visible = true;
 				})
 		);

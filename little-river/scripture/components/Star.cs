@@ -45,8 +45,7 @@ public partial class Star : Node3D
 	{
 		rzeka.Pluck(this, new StarCollected(Name));
 		Visible = false;
-		// _starArea.SetDeferred(Area3D.PropertyName.Monitorable, false);
-		_starArea.Monitorable = false;
+		_starArea.SetDeferred(Area3D.PropertyName.Monitorable, false);
 		_audioPlayer.Play();
 		_audioPlayer.OnFinished().Take(1).Subscribe(_ => QueueFree());
 	}

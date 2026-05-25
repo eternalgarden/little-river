@@ -11,19 +11,26 @@ public partial class GameLoop : Node3D
     PackedScene _gameScene;
 
     [Export]
+    PackedScene _mainMenuScene;
+
+    [Export]
     Node3D _gameSceneParent;
 
-    CollectibleDisposable Q { get; set; }
     static IRzeka rzeka => LittleSource.Rzeka;
+    CollectibleDisposable Q { get; set; }
 
     bool _isGameOn = false;
     readonly GameTimer _gameTimer = new();
 
+    const int HOW_MANY_STARS = 10;
+
     public override void _EnterTree()
     {
         Q = new();
+
         RegisterGameStartSpells();
         RegisterGameLoopSpells();
+        RegisterReturnToMenuSpells();
     }
 
     public override void _Ready()
@@ -114,6 +121,72 @@ public partial class GameLoop : Node3D
         );
     }
 
+    void RegisterReturnToMenuSpells()
+    {
+        Q += rzeka.Loom<MainMenuRequested, MainMenuReadyToLoad>(
+            this,
+            spell => spell.Where(req => req.SkipFadeOut).Select(_ => new MainMenuReadyToLoad())
+        );
+
+        Q += rzeka.Loom<MainMenuRequested, MainMenuReadyToLoad>(
+            this,
+            spell =>
+                spell
+                    .Where(req => !req.SkipFadeOut)
+                    .SelectMany(startGame =>
+                        rzeka
+                            .Ask<ScreenFadeRequest, ScreenFadeResponse>(
+                                this,
+                                new ScreenFadeRequest(
+                                    ScreenFadeRequest.ScreenFadeEnum.FadeOut,
+                                    0.5f
+                                ).WithCircumstances(startGame)
+                            )
+                            .Where(fadeRes => fadeRes.WasSuccessful)
+                            .Select(fadeRes =>
+                                new MainMenuReadyToLoad().WithCircumstances(startGame, fadeRes)
+                            )
+                    )
+        );
+
+        Q += rzeka.Loom<MainMenuReadyToLoad, MainMenuLoaded>(
+            this,
+            spell =>
+                spell.SelectMany(menuLoadReady =>
+                    rzeka
+                        .Ask<LoadSceneRequest, LoadSceneResponse>(
+                            this,
+                            new LoadSceneRequest(_mainMenuScene.ResourcePath).WithCircumstances(
+                                menuLoadReady
+                            )
+                        )
+                        .Where(res => res.WasSuccessful)
+                        .SelectMany(async r =>
+                        {
+                            var scene =
+                                r.PackedScene.Instantiate()
+                                ?? throw new InvalidOperationException(
+                                    $"Instantiate returned null for {_mainMenuScene.ResourcePath}"
+                                );
+
+                            _gameSceneParent.CallDeferred(Node.MethodName.AddChild, scene);
+                            await scene.ToSignal(scene, Node.SignalName.Ready);
+                            return new MainMenuLoaded().WithCircumstances(menuLoadReady, r);
+                        })
+                        .ObserveOn(rzeka.MainThread)
+                )
+        );
+
+        Q += rzeka.Loom<MainMenuLoaded, ScreenFadeRequest>(
+            this,
+            spell =>
+                spell.Select(_ => new ScreenFadeRequest(
+                    ScreenFadeRequest.ScreenFadeEnum.FadeIn,
+                    1f
+                ))
+        );
+    }
+
     void RegisterGameLoopSpells()
     {
         Q += rzeka.Weave<GameStarted>(
@@ -148,7 +221,7 @@ public partial class GameLoop : Node3D
             this,
             spell =>
                 spell
-                    .Where(scoreState => scoreState.Score == 1)
+                    .Where(scoreState => scoreState.Score == HOW_MANY_STARS)
                     .Select(_ => new GameWon(_gameTimer.Elapsed))
         );
     }

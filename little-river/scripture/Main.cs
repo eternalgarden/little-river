@@ -6,13 +6,7 @@ namespace LittleRiver;
 
 public partial class Main : Node
 {
-    [Export]
-    Node3D _mainMenuParent;
-
-    [Export]
-    PackedScene _mainMenuScene;
-
-    IRzeka rzeka => LittleSource.Rzeka;
+    static IRzeka rzeka => LittleSource.Rzeka;
     CollectibleDisposable Q { get; set; }
 
     public override void _EnterTree()
@@ -47,38 +41,7 @@ public partial class Main : Node
     {
         Q += rzeka.Loom<GameOpened, MainMenuRequested>(
             this,
-            spell => spell.Take(1).Select(_ => new MainMenuRequested())
-        );
-
-        Q += rzeka.Loom<MainMenuRequested, MainMenuLoaded>(
-            this,
-            spell =>
-                spell.SelectMany(gameStarted =>
-                    rzeka
-                        .Ask<LoadSceneRequest, LoadSceneResponse>(
-                            this,
-                            new LoadSceneRequest(_mainMenuScene.ResourcePath).WithCircumstances(
-                                gameStarted
-                            )
-                        )
-                        .Take(1)
-                        .Where(r => r.WasSuccessful)
-                        .Reacting(r =>
-                        {
-                            var activeScene = r.PackedScene.Instantiate();
-                            _mainMenuParent.CallDeferred(Node.MethodName.AddChild, activeScene);
-                        })
-                        .Select(r => new MainMenuLoaded().WithCircumstances(gameStarted, r))
-                )
-        );
-
-        Q += rzeka.Loom<MainMenuLoaded, ScreenFadeRequest>(
-            this,
-            spell =>
-                spell.Select(_ => new ScreenFadeRequest(
-                    ScreenFadeRequest.ScreenFadeEnum.FadeIn,
-                    1f
-                ))
+            spell => spell.Take(1).Select(_ => new MainMenuRequested(skipFadeOut: true))
         );
 
         Q += rzeka.Loom<MainMenuLoaded, GameReady>(

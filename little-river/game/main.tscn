@@ -17,7 +17,7 @@
 
 [node name="main" type="Node3D" unique_id=352470164 node_paths=PackedStringArray("_mainMenuParent")]
 script = ExtResource("1_xtpaf")
-_mainMenuParent = NodePath("main_menu")
+_mainMenuParent = NodePath("")
 _mainMenuScene = ExtResource("2_xkbyp")
 
 [node name="scene_loader" type="Node3D" parent="." unique_id=1682464389]
@@ -33,14 +33,13 @@ GameEnvironment = ExtResource("7_g6fv7")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="world_env_fairy" unique_id=18167779]
 environment = ExtResource("3_vop5m")
 
-[node name="main_menu" type="Node3D" parent="." unique_id=737234216]
-
 [node name="screen_fader" type="Node3D" parent="." unique_id=259866688]
 script = ExtResource("9_lx3aj")
 
 [node name="game_loop" type="Node3D" parent="." unique_id=1754155116 node_paths=PackedStringArray("_gameSceneParent")]
 script = ExtResource("9_itumj")
 _gameScene = ExtResource("10_itumj")
+_mainMenuScene = ExtResource("2_xkbyp")
 _gameSceneParent = NodePath(".")
 
 [node name="audio_player" type="Node3D" parent="." unique_id=809006747 node_paths=PackedStringArray("_ambienceSoundPlayer", "_effectSoundPlayer")]
