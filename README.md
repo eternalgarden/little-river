@@ -12,3 +12,5 @@ How to dig around:
   - Go in your browser to the localhost url that your console printed.
   - When you start the `little-river` game a websocket connection will be established between the game and that browser tab.
   - This lets you debug both in Godot editor and in a build time.
+
+Character controller code and the level assets taken from [Character Controller C# by expressobits](https://godotengine.org/asset-library/asset/2121), other attributions in `NOTICES.md`.
