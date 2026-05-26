@@ -1,4 +1,4 @@
-# little-godot-rzeka
+# little-river
 
 An example project using [rzeka event-bus architecture](https://github.com/eternalgarden/rzeka), made in `Godot 4.6`.
 
