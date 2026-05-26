@@ -8,33 +8,33 @@ script = ExtResource("1_5jhob")
 
 [node name="Jump" type="AudioStreamPlayer3D" parent="." unique_id=55246958]
 stream = ExtResource("9_pghw8")
-volume_db = -15.0
-max_db = -5.0
-attenuation_filter_db = -65.4
+max_db = -12.0
+attenuation_filter_cutoff_hz = 20500.0
+doppler_tracking = 2
 
 [node name="Step" type="AudioStreamPlayer3D" parent="." unique_id=1425005102]
 stream = ExtResource("9_pghw8")
-volume_db = -15.0
-max_db = -5.0
-attenuation_filter_db = -65.4
+max_db = -12.0
+attenuation_filter_cutoff_hz = 20500.0
+doppler_tracking = 2
 
 [node name="Land" type="AudioStreamPlayer3D" parent="." unique_id=282526473]
 stream = ExtResource("9_pghw8")
-volume_db = -15.0
-max_db = -5.0
-attenuation_filter_db = -65.4
+max_db = -12.0
+attenuation_filter_cutoff_hz = 20500.0
+doppler_tracking = 2
 
 [node name="Crouch" type="AudioStreamPlayer3D" parent="." unique_id=1697343268]
 stream = ExtResource("9_pghw8")
-volume_db = -15.0
-max_db = -5.0
-attenuation_filter_db = -65.4
+max_db = -12.0
+attenuation_filter_cutoff_hz = 20500.0
+doppler_tracking = 2
 
 [node name="Uncrouch" type="AudioStreamPlayer3D" parent="." unique_id=1401860256]
 stream = ExtResource("9_pghw8")
-volume_db = -15.0
-max_db = -5.0
-attenuation_filter_db = -65.4
+max_db = -12.0
+attenuation_filter_cutoff_hz = 20500.0
+doppler_tracking = 2
 
 [node name="Detect Ground" type="RayCast3D" parent="." unique_id=1490210969]
 target_position = Vector3(0, -1.5, 0)

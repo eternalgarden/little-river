@@ -140,7 +140,7 @@ _starArea = NodePath("Sketchfab_model/tinker_obj_cleaner_materialmerger_gles/Obj
 _audioPlayer = NodePath("AudioStreamPlayer3D")
 
 [node name="Sketchfab_model" type="Node3D" parent="." unique_id=1933685714]
-transform = Transform3D(-0.9937094, 0.11214691, 4.010578e-08, 0, -3.5762787e-07, 0.99999994, 0.11214396, 0.99371094, 3.5538204e-07, 0, 0.48158473, 0)
+transform = Transform3D(0.82375175, 0.5667454, 2.0268422e-07, 0, -3.5762787e-07, 0.99999994, 0.56675166, -0.82375515, -2.945962e-07, 0, 0.18215348, 0)
 script = ExtResource("2_vertq")
 _floatSpeed = 0.3
 _maxHeightOffset = 0.2
@@ -173,8 +173,8 @@ mesh = SubResource("ArrayMesh_koicp")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1646233276]
 stream = ExtResource("6_sl1m7")
-volume_db = -10.0
 max_db = -5.0
+attenuation_filter_cutoff_hz = 20500.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=786993073]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.031092376, 0)

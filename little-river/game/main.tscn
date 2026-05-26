@@ -15,10 +15,8 @@
 [ext_resource type="AudioStream" uid="uid://c37ejsq470ds5" path="res://assets/sounds/spaceship_ambience.wav" id="13_frwyw"]
 [ext_resource type="AudioStream" uid="uid://bn11mxqv0tgtk" path="res://assets/sounds/ambience.ogg" id="14_yyxey"]
 
-[node name="main" type="Node3D" unique_id=352470164 node_paths=PackedStringArray("_mainMenuParent")]
+[node name="main" type="Node3D" unique_id=352470164]
 script = ExtResource("1_xtpaf")
-_mainMenuParent = NodePath("")
-_mainMenuScene = ExtResource("2_xkbyp")
 
 [node name="scene_loader" type="Node3D" parent="." unique_id=1682464389]
 script = ExtResource("3_emt18")
@@ -51,7 +49,7 @@ _mainMenuAmbience = ExtResource("13_frwyw")
 _gameAmbience = ExtResource("14_yyxey")
 
 [node name="ambience_audio_player" type="AudioStreamPlayer" parent="audio_player" unique_id=1558856354]
-volume_db = -15.0
+volume_db = -17.0
 
 [node name="effect_audio_player" type="AudioStreamPlayer" parent="audio_player" unique_id=75247220]
-volume_db = -15.0
+volume_db = -17.0
