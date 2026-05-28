@@ -16,12 +16,12 @@
     />
     <PackageReference
       Include="EternalGarden.Rzeka"
-      Version="1.0.1"
+      Version="1.1.0"
       Condition="!Exists('../../../../sanctuary/rzeka/core/Rzeka.Core.csproj')"
     />
     <PackageReference
       Include="EternalGarden.Rzeka.Dev"
-      Version="1.0.1"
+      Version="1.1.0"
       Condition="!Exists('../../../../sanctuary/rzeka/dev/Rzeka.Dev.csproj')"
     />
     <PackageReference Include="Fleck" Version="1.2.0" />
