@@ -124,7 +124,7 @@ public partial class CharacterControllerPlugin : EditorPlugin
         // Register input events
         foreach (var actionProps in Actions)
         {
-            string settingName = "input/" + actionProps["wwswwww"];
+            string settingName = "input/" + actionProps["name"];
 
             if (!ProjectSettings.HasSetting(settingName))
             {

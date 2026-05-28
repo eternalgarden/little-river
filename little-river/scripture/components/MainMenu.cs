@@ -24,6 +24,8 @@ public partial class MainMenu : Node3D
 
         RegisterSpells();
 
+        rzeka.Whisper("Oiiii, is it the main menu? :o", RzekaMessageType.Hunch);
+
         rzeka.Pluck(this, new SceneEnteredTree(SceneEnteredTree.SceneEnum.MainMenu));
     }
 

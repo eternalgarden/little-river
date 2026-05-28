@@ -22,6 +22,9 @@ public partial class GameLevel : Node3D
 
         RegisterSpells();
 
+        rzeka.Whisper("Let me scare you with an ERRER!", RzekaMessageType.Horror);
+        rzeka.Whisper("Secret reveal: it was not an actual error!");
+
         rzeka.Pluck(this, new SceneEnteredTree(SceneEnteredTree.SceneEnum.Game));
     }
 
