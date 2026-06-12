@@ -21,7 +21,7 @@ _welcomingScreenControl = NodePath("WelcomingScreen/Control")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.89061666, 0)
 
 [node name="mesh" parent="shining_star" unique_id=1990171217 instance=ExtResource("2_etg3l")]
-transform = Transform3D(0.5823706, 0, 0.8125451, 0, 1, 0, -0.8125451, 0, 0.5823706, 0.10201931, 0.91170716, 0.13055468)
+transform = Transform3D(0.67406493, 0, 0.7382943, 0, 1, 0, -0.7382943, 0, 0.67406493, 0.10201931, 1.0073749, 0.13055468)
 script = ExtResource("3_etg3l")
 _maxHeightOffset = 0.25
 _rotationSpeed = -0.3
@@ -89,7 +89,7 @@ material_override = ExtResource("4_7v0u2")
 transform = Transform3D(0.491574, 0, 0, 0, 1, 0, 0, 0, 0.555284, 0, -3, 5.93584)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1910017535 node_paths=PackedStringArray("_target")]
-transform = Transform3D(-0.776884, -0.21535084, 0.5916716, 0, 0.9396926, 0.34202012, -0.62964374, 0.26570997, -0.7300322, 2.9583578, 1.319484, -3.650161)
+transform = Transform3D(0.99325556, -0.039655827, 0.10895349, 0, 0.9396926, 0.34202015, -0.11594588, -0.33971342, 0.9333549, 0.5447675, 1.319484, 4.6667747)
 script = ExtResource("7_3ug6f")
 _target = NodePath("../shining_star")
 _yOffset = 0.5

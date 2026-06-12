@@ -70,11 +70,6 @@ public partial class GameLoop : Node3D
                 )
         );
 
-        // Q += rzeka.Loom<GameReadyToLoad, GameTimerState>(
-        //     this,
-        //     spell => spell.Take(1).Select(_ => new GameTimerState(_gameTimer))
-        // );
-
         Q += rzeka.Loom<GameReadyToLoad, GameLoaded>(
             this,
             spell =>

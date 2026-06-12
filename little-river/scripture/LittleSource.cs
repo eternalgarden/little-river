@@ -1,5 +1,4 @@
 using System.Reactive.Concurrency;
-using System.Reactive.Disposables;
 using System.Threading;
 using Godot;
 using Rzeka;
@@ -19,13 +18,16 @@ public partial class LittleSource : Node
         var mainThread = new SynchronizationContextScheduler(SynchronizationContext.Current);
 
         Spring spring = new();
+
+        // See notes on Eris
         Q += spring.EnableDevServer();
+
         Rzeka = spring.Create(
             "little-river",
             mainThread: mainThread,
             describeOwner: who => (who as Node)?.Name
-        // isOnMainThread: () => Godot.Engine.IsMainThread()
         );
+
         GD.Print("🌊 Rzeka is operational!");
     }
 
