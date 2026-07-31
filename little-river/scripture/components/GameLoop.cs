@@ -94,7 +94,6 @@ public partial class GameLoop : Node3D
                             await scene.ToSignal(scene, Node.SignalName.Ready);
                             return new GameLoaded().WithCircumstances(gameReady, r);
                         })
-                        .ObserveOn(rzeka.MainThread)
                 )
         );
 
@@ -168,7 +167,6 @@ public partial class GameLoop : Node3D
                             await scene.ToSignal(scene, Node.SignalName.Ready);
                             return new MainMenuLoaded().WithCircumstances(menuLoadReady, r);
                         })
-                        .ObserveOn(rzeka.MainThread)
                 )
         );
 
